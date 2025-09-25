@@ -1,0 +1,132 @@
+@startuml
+' Диаграмма ER базы данных для сайта продажи самолетов
+left to right direction
+hide circle
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+
+entity "Пользователь" as User {
+  *id : UUID
+  --
+  email : varchar(320) <<UNIQUE>>
+  phone : varchar(32)? <<UNIQUE>>
+  password_hash : varchar
+  first_name : varchar(100)
+  last_name : varchar(100)
+  middle_name : varchar(100)?
+  role : enum('buyer','seller','admin','broker')
+  is_verified : boolean
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "Тип самолета" as AircraftType {
+  *id : UUID
+  --
+  manufacturer : varchar(100)
+  model : varchar(100)
+  variant : varchar(100)?
+  description : text?
+  engine_count : int
+  engine_type : enum('piston','turboprop','jet','electric','other')
+  max_seats : int
+  max_takeoff_weight_kg : int
+  range_km : int
+  cruise_speed_knots : int
+  pressurized : boolean
+}
+
+entity "Самолет" as Aircraft {
+  *id : UUID
+  --
+  type_id : UUID
+  owner_id : UUID
+  serial_number : varchar(100) <<UNIQUE>>
+  registration_number : varchar(50)? <<UNIQUE>>
+  manufacture_year : int
+  flight_hours : numeric(10,1)
+  cycles : int
+  last_maintenance_date : date?
+  condition : enum('new','used','overhauled')
+  location_country : char(2)?
+  location_airport : varchar(10)?
+  location_lat : decimal(9,6)?
+  location_lon : decimal(9,6)?
+  listed_price : numeric(15,2)?
+  currency : char(3)?
+  is_listed : boolean
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "Техпаспорт самолета" as TechPassport {
+  *aircraft_id : UUID
+  --
+  airworthiness_cert_number : varchar(100)?
+  airworthiness_valid_until : date?
+  engine_model : varchar(100)?
+  engines_count : int
+  propeller_model : varchar(100)?
+  avionics : varchar(255)?
+  mtow_kg : int?
+  empty_weight_kg : int?
+  fuel_capacity_l : int?
+  length_m : decimal(5,2)?
+  wingspan_m : decimal(5,2)?
+  height_m : decimal(5,2)?
+  noise_cert : varchar(100)?
+  equipment_json : json?
+  last_updated_at : timestamp
+}
+
+entity "Сделка" as Deal {
+  *id : UUID
+  --
+  deal_number : varchar(50) <<UNIQUE>>
+  aircraft_id : UUID
+  buyer_id : UUID
+  seller_id : UUID
+  status_code : varchar(30)
+  price : numeric(15,2)
+  currency : char(3)
+  created_at : timestamp
+  updated_at : timestamp
+  closed_at : timestamp?
+}
+
+entity "Статус сделки" as DealStatus {
+  *code : varchar(30)
+  --
+  name : varchar(100)
+  description : text?
+  order_index : int
+  is_terminal : boolean
+}
+
+entity "История статусов сделки" as DealStatusHistory {
+  *id : UUID
+  --
+  deal_id : UUID
+  status_code : varchar(30)
+  changed_by : UUID
+  changed_at : timestamp
+  comment : text?
+}
+
+' Связи
+AircraftType ||--o{ Aircraft : тип
+User ||--o{ Aircraft : владелец
+
+Aircraft ||--o{ Deal : предмет
+User ||--o{ Deal : продавец
+User ||--o{ Deal : покупатель
+
+DealStatus ||--o{ Deal : статус
+Deal ||--o{ DealStatusHistory : история
+DealStatus ||--o{ DealStatusHistory : статус
+User ||--o{ DealStatusHistory : изменил
+
+' 1:0..1 техпаспорт к самолету
+Aircraft ||--o| TechPassport : техпаспорт
+
+@enduml
