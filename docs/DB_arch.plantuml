@@ -6,29 +6,27 @@ skinparam linetype ortho
 skinparam classAttributeIconSize 0
 
 entity "Пользователь" as User {
-  *id : UUID
+  *id : Long
   --
   email : varchar(320) <<UNIQUE>>
   phone : varchar(32)? <<UNIQUE>>
-  password_hash : varchar
+  hashed_password : varchar
   first_name : varchar(100)
   last_name : varchar(100)
-  middle_name : varchar(100)?
-  role : enum('buyer','seller','admin','broker')
-  is_verified : boolean
+  role : enum('user','admin')
   created_at : timestamp
   updated_at : timestamp
 }
 
-entity "Тип самолета" as AircraftType {
-  *id : UUID
+entity "Тип самолета" as AircraftEquipment {
+  *id : Long
   --
   manufacturer : varchar(100)
   model : varchar(100)
   variant : varchar(100)?
   description : text?
   engine_count : int
-  engine_type : enum('piston','turboprop','jet','electric','other')
+  engine_id : int FK
   max_seats : int
   max_takeoff_weight_kg : int
   range_km : int
@@ -36,59 +34,63 @@ entity "Тип самолета" as AircraftType {
   pressurized : boolean
 }
 
+entity "Двигатель" as Engine {
+    *id : Long
+    --
+    name : varchar
+    type : enum('piston','turboprop','jet','electric','other')
+    power : Float
+}
+
+entity "Доп функция" as Feature {
+    *id : Long
+    --
+    name : varchar
+}
+
 entity "Самолет" as Aircraft {
-  *id : UUID
+  *id : Long
   --
-  type_id : UUID
-  owner_id : UUID
+  type_id : Long FK
+  tech_passport_id : Long FK
+  owner_id : Long
   serial_number : varchar(100) <<UNIQUE>>
   registration_number : varchar(50)? <<UNIQUE>>
-  manufacture_year : int
-  flight_hours : numeric(10,1)
-  cycles : int
-  last_maintenance_date : date?
-  condition : enum('new','used','overhauled')
-  location_country : char(2)?
-  location_airport : varchar(10)?
-  location_lat : decimal(9,6)?
-  location_lon : decimal(9,6)?
   listed_price : numeric(15,2)?
   currency : char(3)?
-  is_listed : boolean
   created_at : timestamp
   updated_at : timestamp
 }
 
 entity "Техпаспорт самолета" as TechPassport {
-  *aircraft_id : UUID
+  *id : Long
   --
-  airworthiness_cert_number : varchar(100)?
-  airworthiness_valid_until : date?
-  engine_model : varchar(100)?
-  engines_count : int
-  propeller_model : varchar(100)?
-  avionics : varchar(255)?
-  mtow_kg : int?
+  flight_hours : numeric(10,1)
+  manufacture_year : int
   empty_weight_kg : int?
   fuel_capacity_l : int?
   length_m : decimal(5,2)?
   wingspan_m : decimal(5,2)?
   height_m : decimal(5,2)?
   noise_cert : varchar(100)?
-  equipment_json : json?
-  last_updated_at : timestamp
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "Техпаспорт-фича" as TechPassportFeature {
+    tech_passport_id : int FK
+    feature_id : int FK
 }
 
 entity "Сделка" as Deal {
-  *id : UUID
+  *id : Long
   --
   deal_number : varchar(50) <<UNIQUE>>
-  aircraft_id : UUID
-  buyer_id : UUID
-  seller_id : UUID
+  aircraft_id : Long
+  buyer_id : Long
+  seller_id : Long
   status_code : varchar(30)
-  price : numeric(15,2)
-  currency : char(3)
+  is_active : boolean
   created_at : timestamp
   updated_at : timestamp
   closed_at : timestamp?
@@ -104,17 +106,21 @@ entity "Статус сделки" as DealStatus {
 }
 
 entity "История статусов сделки" as DealStatusHistory {
-  *id : UUID
+  *id : Long
   --
-  deal_id : UUID
+  deal_id : Long
   status_code : varchar(30)
-  changed_by : UUID
+  changed_by : Long
   changed_at : timestamp
   comment : text?
 }
 
 ' Связи
-AircraftType ||--o{ Aircraft : тип
+AircraftEquipment ||--o{ Aircraft : тип
+TechPassport }o-|| TechPassportFeature
+TechPassportFeature ||-o{ Feature
+AircraftEquipment ||--o{ Engine
+
 User ||--o{ Aircraft : владелец
 
 Aircraft ||--o{ Deal : предмет
