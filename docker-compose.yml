@@ -1,6 +1,7 @@
-version: "3.9"
+# Docker Compose configuration for a Spring Boot application with PostgreSQL
 
 services:
+  # PostgreSQL Database Service with Health Check (might be optional)
   db:
     image: postgres:16
     container_name: postgres-db
@@ -12,22 +13,33 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
     networks:
       - app-network
 
+    # Spring Boot Application Service, depends on the database service and builds from the local Dockerfile
   app:
     build: .
     container_name: spring-boot-app
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/appdb
+      SPRING_PROFILES_ACTIVE: docker
+      DB_HOST: db
+      DB_PORT: 5432
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
       SPRING_DATASOURCE_USERNAME: appuser
       SPRING_DATASOURCE_PASSWORD: apppass
-      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
-      SPRING_PROFILES_ACTIVE: docker
     ports:
       - "8080:8080"
+    restart: unless-stopped
     networks:
       - app-network
 
