@@ -1,5 +1,6 @@
 package org.oldjopa.hls.api
 
+import jakarta.validation.Valid
 import org.oldjopa.hls.dto.ChangeDealStatusRequest
 import org.oldjopa.hls.dto.CreateDealRequest
 import org.oldjopa.hls.dto.DealDto
@@ -12,6 +13,6 @@ interface DealApi {
     fun get(id: Long): DealDto
     fun history(id: Long):  List<DealStatusHistoryDto>
     fun statuses(): List<DealStatusDto>
-    fun create(req: CreateDealRequest): ResponseEntity<Any>
-    fun changeStatus(id: Long , req: ChangeDealStatusRequest): DealDto
+    fun create(@Valid req: CreateDealRequest): ResponseEntity<Any>
+    fun changeStatus(id: Long, @Valid req: ChangeDealStatusRequest): DealDto
 }

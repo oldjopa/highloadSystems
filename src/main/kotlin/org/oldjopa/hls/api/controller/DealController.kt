@@ -33,7 +33,7 @@ class DealController(private val service: DealService) : DealApi {
     override fun statuses() = service.listStatuses()
 
     @PostMapping
-    override fun create(@RequestBody @Valid req: CreateDealRequest): ResponseEntity<Any> {
+    override fun create(@RequestBody req: CreateDealRequest): ResponseEntity<Any> {
         val created = service.create(req)
         val headers = HttpHeaders()
         headers.add(HttpHeaders.LOCATION, "/api/deals/${created.id}")
@@ -41,5 +41,5 @@ class DealController(private val service: DealService) : DealApi {
     }
 
     @PostMapping("/{id}/status")
-    override fun changeStatus(@PathVariable id: Long, @RequestBody @Valid req: ChangeDealStatusRequest) = service.changeStatus(id, req)
+    override fun changeStatus(@PathVariable id: Long, @RequestBody req: ChangeDealStatusRequest) = service.changeStatus(id, req)
 }
