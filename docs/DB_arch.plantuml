@@ -13,13 +13,19 @@ entity "Пользователь" as User {
   hashed_password : varchar
   first_name : varchar(100)
   last_name : varchar(100)
-  role : enum('user','admin')
   created_at : timestamp
   updated_at : timestamp
 }
 
+entity "Роль пользователя" as Role {
+  *name : varchar(50)
+  --
+  level : int
+  description : text?
+}
+
 entity "Тип самолета" as AircraftEquipment {
-  *id : Long
+  * id : Long
   --
   manufacturer : varchar(100)
   model : varchar(100)
@@ -134,5 +140,6 @@ User ||--o{ DealStatusHistory : изменил
 
 ' 1:0..1 техпаспорт к самолету
 Aircraft ||--o| TechPassport : техпаспорт
+User }o--o{ Role : роль
 
 @enduml
