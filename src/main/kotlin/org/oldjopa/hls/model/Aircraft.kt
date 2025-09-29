@@ -25,16 +25,25 @@ import java.math.BigDecimal
     ]
 )
 class Aircraft(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "type_id")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type_id")
     val type: AircraftEquipment,
-    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL]) @JoinColumn(name = "tech_passport_id")
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @JoinColumn(name = "tech_passport_id")
     val techPassport: TechPassport?,
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "owner_id")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
     var owner: User,
+
     @Column(name = "serial_number", nullable = false)
     val serialNumber: String,
+
     @Column(name = "registration_number")
     var registrationNumber: String?,
     val listedPrice: BigDecimal?,

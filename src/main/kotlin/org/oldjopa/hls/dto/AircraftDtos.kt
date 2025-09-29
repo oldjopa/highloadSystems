@@ -1,9 +1,12 @@
 package org.oldjopa.hls.dto
 
+import jakarta.validation.constraints.Max
+import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 import java.math.BigDecimal
+import javax.print.attribute.standard.PrinterMoreInfoManufacturer
 
 // Read DTO
 
@@ -42,5 +45,29 @@ data class UpdateAircraftRequest(
     val listedPrice: BigDecimal? = null,
     @field:Size(max = 3)
     val currency: String? = null
+)
+
+data class CreateAircraftEquipmentRequest(
+    @field:NotBlank @field:Size(max = 100)
+    val manufacturer: String,
+    @field:NotBlank @field:Size(max = 100)
+    val model: String,
+    @field:Size(max = 100)
+    val variant: String?,
+    val description: String?,
+    @field:Min(1) @field:Max(5)
+    val engineCount: Int,
+    @field:NotNull
+    val engineId: Long,
+    @field:Min(1) @field:Max(1000)
+    val maxSeats: Int,
+    @field:Max(100000)
+    val maxTakeoffWeightKg: Int,
+    @field:Max(20000)
+    val rangeKm: Int,
+    @field:Max(1000)
+    val cruiseSpeedKnots: Int,
+    @field:NotNull
+    val pressurized: Boolean
 )
 

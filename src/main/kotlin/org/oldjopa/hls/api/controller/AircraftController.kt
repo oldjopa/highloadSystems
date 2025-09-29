@@ -4,6 +4,7 @@ import jakarta.validation.Valid
 import org.oldjopa.hls.api.AircraftApi
 import org.oldjopa.hls.dto.CreateAircraftRequest
 import org.oldjopa.hls.dto.UpdateAircraftRequest
+import org.oldjopa.hls.dto.CreateAircraftEquipmentRequest
 import org.oldjopa.hls.service.AircraftService
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -34,6 +35,13 @@ class AircraftController(private val service: AircraftService) : AircraftApi {
         val created = service.create(req)
         val headers = HttpHeaders().apply { add(HttpHeaders.LOCATION, "/api/aircraft/${created.id}") }
         return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(created)
+    }
+
+    @PostMapping("/add-type")
+    override fun createAircraftType(@RequestBody @Valid req: CreateAircraftEquipmentRequest): ResponseEntity<Any> {
+        val createdId = service.createAircraftType(req)
+        val headers = HttpHeaders().apply { add(HttpHeaders.LOCATION, "/api/aircraft/equipment/$createdId") }
+        return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(mapOf("id" to createdId))
     }
 
     @PatchMapping("/{id}")

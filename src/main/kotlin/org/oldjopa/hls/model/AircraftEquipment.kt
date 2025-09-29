@@ -13,17 +13,23 @@ import jakarta.persistence.Table
 @Entity
 @Table(name = "aircraft_equipment")
 class AircraftEquipment(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
+
     val manufacturer: String,
     val model: String,
     val variant: String?,
+
     @Column(columnDefinition = "text")
     val description: String?,
+
     val engineCount: Int,
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "engine_id")
     val engine: Engine,
+
     val maxSeats: Int,
     val maxTakeoffWeightKg: Int,
     val rangeKm: Int,

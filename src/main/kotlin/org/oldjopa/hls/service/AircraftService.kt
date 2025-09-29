@@ -13,11 +13,15 @@ import org.oldjopa.hls.common.exception.ValidationException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.oldjopa.hls.utls.toDto
+import org.oldjopa.hls.model.AircraftEquipment
+import org.oldjopa.hls.dto.CreateAircraftEquipmentRequest
+import org.oldjopa.hls.repository.EngineRepository
 
 @Service
 class AircraftService(
     private val aircraftRepository: AircraftRepository,
     private val equipmentRepository: AircraftEquipmentRepository,
+    private val engineRepository: EngineRepository,
     private val techPassportRepository: TechPassportRepository,
     private val userRepository: UserRepository
 ) {
@@ -32,9 +36,13 @@ class AircraftService(
         if (aircraftRepository.existsBySerialNumber(req.serialNumber)) {
             throw ValidationException("Serial number already exists: ${req.serialNumber}")
         }
-        val type = equipmentRepository.findById(req.typeId).orElseThrow { NotFoundException("Equipment ${req.typeId} not found") }
-        val owner = userRepository.findById(req.ownerId).orElseThrow { NotFoundException("User ${req.ownerId} not found") }
-        val tp = req.techPassportId?.let { techPassportRepository.findById(it).orElseThrow { NotFoundException("TechPassport $it not found") } }
+        val type = equipmentRepository.findById(req.typeId)
+            .orElseThrow { NotFoundException("Equipment ${req.typeId} not found") }
+        val owner =
+            userRepository.findById(req.ownerId).orElseThrow { NotFoundException("User ${req.ownerId} not found") }
+        val tp = req.techPassportId?.let {
+            techPassportRepository.findById(it).orElseThrow { NotFoundException("TechPassport $it not found") }
+        }
         val saved = aircraftRepository.save(
             Aircraft(
                 type = type,
@@ -49,11 +57,33 @@ class AircraftService(
         return saved.toDto()
     }
 
+    fun createAircraftType(req: CreateAircraftEquipmentRequest): Long {
+        val engine = engineRepository.findById(req.engineCount.toLong())
+            .orElseThrow { NotFoundException("Engine type ${req.engineCount} not found") }
+        val equipment = AircraftEquipment(
+            manufacturer = req.manufacturer,
+            model = req.model,
+            variant = req.variant,
+            description = req.description,
+            engineCount = req.engineCount,
+            engine = engine,
+            maxSeats = req.maxSeats,
+            maxTakeoffWeightKg = req.maxTakeoffWeightKg,
+            rangeKm = req.rangeKm,
+            cruiseSpeedKnots = req.cruiseSpeedKnots,
+            pressurized = req.pressurized
+        )
+        val saved = equipmentRepository.save(equipment)
+        return saved.id
+    }
+
     @Transactional
     fun update(id: Long, req: UpdateAircraftRequest): AircraftDto {
         val a = aircraftRepository.findById(id).orElseThrow { NotFoundException("Aircraft $id not found") }
         req.registrationNumber?.let { a.registrationNumber = it }
-        req.ownerId?.let { ownerId -> a.owner = userRepository.findById(ownerId).orElseThrow { NotFoundException("User $ownerId not found") } }
+        req.ownerId?.let { ownerId ->
+            a.owner = userRepository.findById(ownerId).orElseThrow { NotFoundException("User $ownerId not found") }
+        }
         // listedPrice & currency предполагаем тоже можно обновлять
         req.listedPrice?.let { /* entity field is val, skipping unless design changes */ }
         req.currency?.let { /* same note */ }
@@ -65,21 +95,4 @@ class AircraftService(
         if (!aircraftRepository.existsById(id)) throw NotFoundException("Aircraft $id not found")
         aircraftRepository.deleteById(id)
     }
-
-    // Deprecated legacy command style kept for backward compatibility if something else references it
-    @Deprecated("Use CreateAircraftRequest")
-    data class CreateAircraftCmd(
-        val typeId: Long,
-        val techPassportId: Long?,
-        val ownerId: Long,
-        val serialNumber: String,
-        val registrationNumber: String?,
-        val listedPrice: java.math.BigDecimal?,
-        val currency: String?
-    )
-    @Deprecated("Use UpdateAircraftRequest")
-    data class UpdateAircraftCmd(
-        val registrationNumber: String?,
-        val ownerId: Long?
-    )
 }
