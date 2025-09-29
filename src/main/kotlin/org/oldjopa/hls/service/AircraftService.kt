@@ -15,7 +15,11 @@ import org.springframework.transaction.annotation.Transactional
 import org.oldjopa.hls.utls.toDto
 import org.oldjopa.hls.model.AircraftEquipment
 import org.oldjopa.hls.dto.CreateAircraftEquipmentRequest
+import org.oldjopa.hls.dto.CreateEngineRequest
+import org.oldjopa.hls.dto.CreateTechPassportRequest
+import org.oldjopa.hls.model.TechPassport
 import org.oldjopa.hls.repository.EngineRepository
+import java.time.Instant
 
 @Service
 class AircraftService(
@@ -58,7 +62,7 @@ class AircraftService(
     }
 
     fun createAircraftType(req: CreateAircraftEquipmentRequest): Long {
-        val engine = engineRepository.findById(req.engineCount.toLong())
+        val engine = engineRepository.findById(req.engineId.toLong())
             .orElseThrow { NotFoundException("Engine type ${req.engineCount} not found") }
         val equipment = AircraftEquipment(
             manufacturer = req.manufacturer,
@@ -74,6 +78,33 @@ class AircraftService(
             pressurized = req.pressurized
         )
         val saved = equipmentRepository.save(equipment)
+        return saved.id
+    }
+
+    fun createEngine(req: CreateEngineRequest): Long {
+        val engine = org.oldjopa.hls.model.Engine(
+            name = req.name,
+            type = req.type,
+            power = req.power
+        )
+        val saved = engineRepository.save(engine)
+        return saved.id
+    }
+
+    fun createTechPassport(req: CreateTechPassportRequest): Long {
+        val tp = TechPassport(
+            flightHours = req.flightHours,
+            manufactureYear = req.manufactureYear,
+            emptyWeightKg = req.emptyWeightKg,
+            fuelCapacityL = req.fuelCapacityL,
+            lengthM = req.lengthM,
+            wingspanM = req.wingspanM,
+            heightM = req.heightM,
+            noiseCert = req.noiseCert,
+            createdAt = Instant.now(),
+            updatedAt = Instant.now()
+        )
+        val saved = techPassportRepository.save(tp)
         return saved.id
     }
 

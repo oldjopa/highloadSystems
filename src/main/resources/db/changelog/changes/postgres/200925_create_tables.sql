@@ -71,7 +71,9 @@ CREATE TABLE IF NOT EXISTS tech_passport (
     length_m double precision,
     wingspan_m double precision,
     height_m double precision,
-    noise_cert varchar(255)
+    noise_cert varchar(255),
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS tech_passport_feature (
