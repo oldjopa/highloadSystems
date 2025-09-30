@@ -35,6 +35,15 @@ class AircraftService(
 
     fun list(): List<AircraftDto> = aircraftRepository.findAll().map { it.toDto() }
 
+
+    @Transactional(readOnly = true)
+    fun listFull() = aircraftRepository.findAllProjectedBy()
+
+    @Transactional(readOnly = true)
+    fun getFull(id: Long) =
+        aircraftRepository.findProjectedById(id)
+            ?: throw IllegalArgumentException("Aircraft not found")
+
     @Transactional
     fun create(req: CreateAircraftRequest): AircraftDto {
         if (aircraftRepository.existsBySerialNumber(req.serialNumber)) {

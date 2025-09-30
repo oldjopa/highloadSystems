@@ -28,6 +28,12 @@ class AircraftController(private val service: AircraftService) : AircraftApi {
     @GetMapping
     override fun getAll() = service.list()
 
+    @GetMapping("/long")
+    override fun getAllFull() = service.listFull()
+
+    @GetMapping("/long/{id}")
+    override fun getFull(@PathVariable id: Long) = service.getFull(id)
+
     @GetMapping("/{id}")
     override fun get(@PathVariable id: Long) = service.get(id)
 

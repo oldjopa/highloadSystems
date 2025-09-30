@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity
 interface AircraftApi {
     fun getAll(): List<AircraftDto>
     fun get(id: Long): AircraftDto
+    fun getFull(id: Long): Any
+    fun getAllFull(): List<Any>
     fun create(@Valid req: CreateAircraftRequest): ResponseEntity<Any>
     fun createAircraftType(@Valid req: CreateAircraftEquipmentRequest): ResponseEntity<Any>
     fun createEngine(@Valid req: CreateEngineRequest): ResponseEntity<Any>
