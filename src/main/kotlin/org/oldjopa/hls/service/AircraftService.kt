@@ -62,7 +62,7 @@ class AircraftService(
     }
 
     fun createAircraftType(req: CreateAircraftEquipmentRequest): Long {
-        val engine = engineRepository.findById(req.engineId.toLong())
+        val engine = engineRepository.findById(req.engineId)
             .orElseThrow { NotFoundException("Engine type ${req.engineCount} not found") }
         val equipment = AircraftEquipment(
             manufacturer = req.manufacturer,

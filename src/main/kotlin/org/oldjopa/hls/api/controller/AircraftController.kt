@@ -35,7 +35,7 @@ class AircraftController(private val service: AircraftService) : AircraftApi {
     override fun create(@RequestBody req: CreateAircraftRequest): ResponseEntity<Any> {
         val created = service.create(req)
         val headers = HttpHeaders().apply { add(HttpHeaders.LOCATION, "/api/aircraft/${created.id}") }
-        return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(created)
+        return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(created.id)
     }
 
     @PostMapping("/add-type")
