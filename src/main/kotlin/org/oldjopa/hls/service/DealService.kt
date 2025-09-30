@@ -94,6 +94,22 @@ class DealService(
         return deal.toDto()
     }
 
+    fun createStatus(req: org.oldjopa.hls.dto.CreateStatusRequest): DealStatusDto {
+        if (dealStatusRepository.existsById(req.code)) {
+            throw ValidationException("Status code already exists: ${req.code}")
+        }
+        val status = dealStatusRepository.save(
+            org.oldjopa.hls.model.DealStatus(
+                code = req.code,
+                name = req.name,
+                description = req.description,
+                orderIndex = req.orderIndex,
+                isTerminal = req.isTerminal
+            )
+        )
+        return status.toDto()
+    }
+
     private fun ensureDealExists(id: Long) {
         if (!dealRepository.existsById(id)) throw NotFoundException("Deal $id not found")
     }

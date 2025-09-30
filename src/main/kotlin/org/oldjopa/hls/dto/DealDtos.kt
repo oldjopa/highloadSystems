@@ -57,3 +57,15 @@ data class ChangeDealStatusRequest(
     val comment: String?
 )
 
+data class CreateStatusRequest(
+    @field:NotBlank @field:Size(max = 30)
+    val code: String,
+    @field:NotBlank @field:Size(max = 100)
+    val name: String,
+    val description: String?,
+    @field:NotNull
+    val orderIndex: Int,
+    @field:NotNull
+    val isTerminal: Boolean
+)
+
