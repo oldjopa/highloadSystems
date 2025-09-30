@@ -8,7 +8,6 @@ import org.oldjopa.hls.dto.ChangeDealStatusRequest
 import org.oldjopa.hls.dto.CreateDealRequest
 import org.oldjopa.hls.model.User
 import org.oldjopa.hls.repository.UserRepository
-import org.oldjopa.hls.api.warehouse.*
 import org.oldjopa.hls.common.exception.ValidationException
 import org.oldjopa.hls.model.Aircraft
 import org.oldjopa.hls.model.AircraftEquipment
@@ -64,7 +63,6 @@ class DealServiceTest {
                 status = d.status,
                 isActive = d.isActive,
                 closedAt = d.closedAt,
-                version = 0,
                 createdAt = Instant.now(),
                 updatedAt = Instant.now()
             )
@@ -76,6 +74,10 @@ class DealServiceTest {
         assertEquals(1, dto.id)
         assertEquals("D-1", dto.dealNumber)
         assertEquals(status.code, dto.status.code)
+        // nested objects now
+        assertEquals(buyer.id, dto.buyer.id)
+        assertEquals(seller.id, dto.seller.id)
+        assertEquals(aircraft.id, dto.aircraft.id)
         verify(exactly = 1) { historyRepository.save(any()) }
     }
 

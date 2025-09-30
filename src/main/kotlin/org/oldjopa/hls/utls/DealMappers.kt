@@ -18,9 +18,9 @@ fun DealStatus.toDto() = DealStatusDto(
 fun Deal.toDto() = DealDto(
     id = id,
     dealNumber = dealNumber,
-    aircraftId = aircraft.id,
-    buyerId = buyer.id,
-    sellerId = seller.id,
+    aircraft = aircraft.toDto(),
+    buyer = buyer.toDto(),
+    seller = seller.toDto(),
     status = status.toDto(),
     isActive = isActive,
     closedAt = closedAt
@@ -35,4 +35,3 @@ fun DealStatusHistory.toDto() = DealStatusHistoryDto(
 )
 
 fun List<DealStatusHistory>.toDto() = map { it.toDto() }
-

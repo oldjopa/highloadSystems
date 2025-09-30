@@ -15,6 +15,6 @@ interface DealApi {
     fun history(id: Long):  List<DealStatusHistoryDto>
     fun statuses(): List<DealStatusDto>
     fun create(@Valid req: CreateDealRequest): ResponseEntity<Any>
-    fun create_status(@Valid req: CreateStatusRequest): ResponseEntity<Any>
+    fun createStatus(@Valid req: CreateStatusRequest): ResponseEntity<Any>
     fun changeStatus(id: Long, @Valid req: ChangeDealStatusRequest): DealDto
 }

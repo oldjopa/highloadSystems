@@ -4,6 +4,14 @@ import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
+data class UserDto(
+    val id: Long,
+    val email: String,
+    val phone: String?,
+    val firstName: String,
+    val lastName: String
+)
+
 data class CreateUserDto(
     @field:Email
     @field:NotBlank
@@ -36,4 +44,3 @@ data class UpdateUserDto(
 
     val hashedPassword: String? = null
 )
-

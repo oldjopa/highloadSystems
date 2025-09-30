@@ -34,7 +34,7 @@ class DealController(private val service: DealService) : DealApi {
     override fun statuses() = service.listStatuses()
 
     @PostMapping("/statuses/create")
-    override fun create_status(@RequestBody req: CreateStatusRequest): ResponseEntity<Any> {
+    override fun createStatus(@RequestBody req: CreateStatusRequest): ResponseEntity<Any> {
         val created = service.createStatus(req)
         val headers = HttpHeaders()
         headers.add(HttpHeaders.LOCATION, "/api/deals/statuses/${created.code}")

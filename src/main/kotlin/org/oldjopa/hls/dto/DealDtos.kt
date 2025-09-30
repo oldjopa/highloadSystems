@@ -15,12 +15,13 @@ data class DealStatusDto(
     val isTerminal: Boolean
 )
 
+
 data class DealDto(
     val id: Long,
     val dealNumber: String,
-    val aircraftId: Long,
-    val buyerId: Long,
-    val sellerId: Long,
+    val aircraft: AircraftDto,
+    val buyer: UserDto,
+    val seller: UserDto,
     val status: DealStatusDto,
     val isActive: Boolean,
     val closedAt: Instant?
@@ -68,4 +69,3 @@ data class CreateStatusRequest(
     @field:NotNull
     val isTerminal: Boolean
 )
-
