@@ -11,6 +11,8 @@ import org.oldjopa.hls.dto.UpdateUserDto
 import org.oldjopa.hls.model.user.User
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 
 @Tag(
     name = "Пользователи",
@@ -25,7 +27,7 @@ interface UserApi {
         description = "Возвращает список всех пользователей системы",
         responses = [ApiResponse(responseCode = "200", description = "Успешно", content = [Content(schema = Schema(implementation = User::class))])]
     )
-    fun getAll(): List<User>
+    fun getAll(pageable: Pageable): Page<User>
 
     @GetMapping("/{id}")
     @Operation(

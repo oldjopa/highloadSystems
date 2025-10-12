@@ -10,6 +10,7 @@ import jakarta.validation.Valid
 import org.oldjopa.hls.dto.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.data.domain.Pageable
 
 @Tag(
     name = "Самолёты",
@@ -24,7 +25,7 @@ interface AircraftApi {
         description = "Возвращает список всех зарегистрированных самолётов в кратком виде",
         responses = [ApiResponse(responseCode = "200", description = "Успешно", content = [Content(schema = Schema(implementation = AircraftDto::class))])]
     )
-    fun getAll(): List<AircraftDto>
+    fun getAll(pageable: Pageable): List<AircraftDto>
 
     @GetMapping("/{id}")
     @Operation(

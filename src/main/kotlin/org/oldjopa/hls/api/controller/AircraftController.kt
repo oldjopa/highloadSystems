@@ -20,21 +20,29 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.data.domain.Pageable
+import org.springdoc.core.annotations.ParameterObject
 
 @RestController
 @Validated
 class AircraftController(private val service: AircraftService) : AircraftApi {
-    @GetMapping
-    override fun getAll() = service.list()
 
+    // findall
+    @GetMapping
+    override fun getAll(@ParameterObject pageable: Pageable) = service.list(pageable)
+
+    // findall with every field unfolded
     @GetMapping("/long")
     override fun getAllFull() = service.listFull()
 
+    // findbyid with every field unfolded
     @GetMapping("/long/{id}")
     override fun getFull(@PathVariable id: Long) = service.getFull(id)
 
+    // findbyid
     @GetMapping("/{id}")
     override fun get(@PathVariable id: Long) = service.get(id)
+
 
     @PostMapping
     override fun create(@RequestBody req: CreateAircraftRequest): ResponseEntity<Any> {
