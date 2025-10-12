@@ -27,56 +27,41 @@ import org.springdoc.core.annotations.ParameterObject
 @Validated
 class AircraftController(private val service: AircraftService) : AircraftApi {
 
-    // findall
-    @GetMapping
     override fun getAll(@ParameterObject pageable: Pageable) = service.list(pageable)
 
-    // findall with every field unfolded
-    @GetMapping("/long")
     override fun getAllFull() = service.listFull()
 
-    // findbyid with every field unfolded
-    @GetMapping("/long/{id}")
     override fun getFull(@PathVariable id: Long) = service.getFull(id)
 
-    // findbyid
-    @GetMapping("/{id}")
     override fun get(@PathVariable id: Long) = service.get(id)
 
-
-    @PostMapping
     override fun create(@RequestBody req: CreateAircraftRequest): ResponseEntity<Any> {
         val created = service.create(req)
         val headers = HttpHeaders().apply { add(HttpHeaders.LOCATION, "/api/aircraft/${created.id}") }
         return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(created.id)
     }
 
-    @PostMapping("/add-type")
     override fun createAircraftType(@RequestBody req: CreateAircraftEquipmentRequest): ResponseEntity<Any> {
         val createdId = service.createAircraftType(req)
         val headers = HttpHeaders().apply { add(HttpHeaders.LOCATION, "/api/aircraft/equipment/$createdId") }
         return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(mapOf("id" to createdId))
     }
 
-    @PostMapping("/add-engine")
     override fun createEngine(@RequestBody req: CreateEngineRequest): ResponseEntity<Any> {
         val createdId = service.createEngine(req)
         val headers = HttpHeaders().apply { add(HttpHeaders.LOCATION, "/api/aircraft/engine/$createdId") }
         return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(mapOf("id" to createdId))
     }
 
-    @PostMapping("/add-tech-passport")
     override fun createTechPassport(@RequestBody req: CreateTechPassportRequest): ResponseEntity<Any> {
         val createdId = service.createTechPassport(req)
         val headers = HttpHeaders().apply { add(HttpHeaders.LOCATION, "/api/aircraft/tech-passport/$createdId") }
         return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(mapOf("id" to createdId))
     }
 
-    @PatchMapping("/{id}")
     override fun update(@PathVariable id: Long, @RequestBody req: UpdateAircraftRequest) =
         service.update(id, req)
 
-    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     override fun delete(@PathVariable id: Long) = service.delete(id)
 }
