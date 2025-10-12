@@ -1,0 +1,9 @@
+{
+  "typeId": 1,
+  "techPassportId": 1,
+  "ownerId": 1,
+  "serialNumber": "string",
+  "registrationNumber": "string",
+  "listedPrice": 10,
+  "currency": "str"
+}

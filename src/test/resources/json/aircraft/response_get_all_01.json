@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "typeId": 1,
+    "techPassportId": 1,
+    "ownerId": 3,
+    "serialNumber": "SN-123",
+    "registrationNumber": "RA-12345",
+    "listedPrice": 1500000.00,
+    "currency": "USD"
+  }
+]

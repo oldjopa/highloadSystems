@@ -38,6 +38,11 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
     testImplementation("io.mockk:mockk:1.13.12")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:mockserver")
+    testImplementation("org.mock-server:mockserver-client-java:5.15.0")
+    testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
