@@ -19,6 +19,8 @@ import org.oldjopa.hls.model.deal.DealStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.Instant
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 
 @Service
 class DealService(
@@ -34,7 +36,7 @@ class DealService(
     }.toDto()
 
     @Transactional(readOnly = true)
-    fun list(): List<DealDto> = dealRepository.findAll().map { it.toDto() }
+    fun list(pageable: Pageable): Page<DealDto> = dealRepository.findAll(pageable).map { it.toDto() }
 
     @Transactional(readOnly = true)
     fun listStatuses(): List<DealStatusDto> = dealStatusRepository.findAll()

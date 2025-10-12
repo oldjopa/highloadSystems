@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.data.domain.Pageable
+import org.springdoc.core.annotations.ParameterObject
 
 @RestController
 class UserController(private val service: UserService) : UserApi {
     @GetMapping
-    override fun getAll() = service.list()
+    override fun getAll(@ParameterObject pageable: Pageable) = service.list(pageable)
 
     @GetMapping("/{id}")
     override fun get(@PathVariable id: Long): User = service.get(id)

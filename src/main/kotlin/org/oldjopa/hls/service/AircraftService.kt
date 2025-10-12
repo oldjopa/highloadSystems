@@ -21,6 +21,7 @@ import org.oldjopa.hls.model.feature.TechPassport
 import org.oldjopa.hls.model.feature.Engine
 import org.oldjopa.hls.repository.feature.EngineRepository
 import java.time.Instant
+import org.springframework.data.domain.Pageable
 
 @Service
 class AircraftService(
@@ -34,7 +35,8 @@ class AircraftService(
         NotFoundException("Aircraft $id not found")
     }.toDto()
 
-    fun list(): List<AircraftDto> = aircraftRepository.findAll().map { it.toDto() }
+    fun list(pageable: Pageable): List<AircraftDto> =
+        aircraftRepository.findAll(pageable).map { it.toDto() }.content
 
 
     @Transactional(readOnly = true)

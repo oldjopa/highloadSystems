@@ -8,6 +8,7 @@ import org.oldjopa.hls.service.DealService
 import org.oldjopa.hls.dto.ChangeDealStatusRequest
 import org.oldjopa.hls.dto.CreateDealRequest
 import org.oldjopa.hls.dto.CreateStatusRequest
+import org.oldjopa.hls.dto.DealDto
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,13 +19,21 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import jakarta.validation.Valid
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Page
+import org.springdoc.core.annotations.ParameterObject
 
 @RestController
 @Validated
 class DealController(private val service: DealService) : DealApi {
 
-    override fun getAll() = service.list()
+    override fun getAll(@ParameterObject pageable: Pageable): ResponseEntity<Page<DealDto>> {
+        val page = service.list(pageable)
+        val headers = HttpHeaders().apply {
+            add("X-Total-Count", page.totalElements.toString())
+        }
+        return ResponseEntity.ok().headers(headers).body(page)
+    }
 
     override fun get(@PathVariable id: Long) = service.get(id)
 
