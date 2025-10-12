@@ -21,6 +21,11 @@ spring:
     enabled: true
     change-log: classpath:db/changelog/changelog-master.yaml
 
+  data:
+    web:
+      pageable:
+        max-page-size: 50
+
 springdoc:
   api-docs:
     path: /api-docs

@@ -7,6 +7,8 @@ import org.oldjopa.hls.repository.user.RoleRepository
 import org.oldjopa.hls.repository.user.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 
 @Service
 class UserService(
@@ -14,7 +16,7 @@ class UserService(
     private val roleRepository: RoleRepository
 ) {
     fun get(id: Long) = userRepository.findById(id).orElseThrow()
-    fun list() = userRepository.findAll()
+    fun list(pageable: Pageable): Page<User> = userRepository.findAll(pageable)
 
     @Transactional
     fun create(newUser: CreateUserDto): User {

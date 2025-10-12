@@ -10,6 +10,8 @@ import jakarta.validation.Valid
 import org.oldjopa.hls.dto.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 
 @Tag(name = "Сделки", description = "API для управления сделками: создание, изменение статусов, история и статусы")
 @RequestMapping("/api/deals")
@@ -21,7 +23,7 @@ interface DealApi {
         description = "Возвращает список всех сделок в системе",
         responses = [ApiResponse(responseCode = "200", description = "Список сделок", content = [Content(schema = Schema(implementation = DealDto::class))])]
     )
-    fun getAll(): List<DealDto>
+    fun getAll(pageable: Pageable): ResponseEntity<Page<DealDto>>
 
     @GetMapping("/{id}")
     @Operation(
