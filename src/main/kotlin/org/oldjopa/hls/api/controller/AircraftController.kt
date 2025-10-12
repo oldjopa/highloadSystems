@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/aircraft")
 @Validated
 class AircraftController(private val service: AircraftService) : AircraftApi {
     @GetMapping

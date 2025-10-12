@@ -1,5 +1,8 @@
 package org.oldjopa.hls.api.controller
 
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
 import org.oldjopa.hls.api.DealApi
 import org.oldjopa.hls.service.DealService
 import org.oldjopa.hls.dto.ChangeDealStatusRequest
@@ -18,13 +21,11 @@ import org.springframework.web.bind.annotation.RestController
 import jakarta.validation.Valid
 
 @RestController
-@RequestMapping("/api/deals")
 @Validated
 class DealController(private val service: DealService) : DealApi {
-    @GetMapping
+
     override fun getAll() = service.list()
 
-    @GetMapping("/{id}")
     override fun get(@PathVariable id: Long) = service.get(id)
 
     @GetMapping("/{id}/history")
