@@ -4,6 +4,7 @@ plugins {
     id("org.springframework.boot") version "3.5.6"
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.jpa") version "1.9.25"
+    id("jacoco")
 }
 
 group = "org.oldjopa"
@@ -52,6 +53,18 @@ allOpen {
     annotation("jakarta.persistence.Embeddable")
 }
 
-tasks.withType<Test> {
+jacoco {
+    toolVersion = "0.8.13"
+}
+
+tasks.test {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        html.required.set(true)
+    }
 }

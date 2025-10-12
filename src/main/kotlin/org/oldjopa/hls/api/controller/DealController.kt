@@ -37,13 +37,10 @@ class DealController(private val service: DealService) : DealApi {
 
     override fun get(@PathVariable id: Long) = service.get(id)
 
-    @GetMapping("/{id}/history")
     override fun history(@PathVariable id: Long) = service.history(id)
 
-    @GetMapping("/statuses")
     override fun statuses() = service.listStatuses()
 
-    @PostMapping("/statuses/create")
     override fun createStatus(@RequestBody req: CreateStatusRequest): ResponseEntity<Any> {
         val created = service.createStatus(req)
         val headers = HttpHeaders()
@@ -51,7 +48,6 @@ class DealController(private val service: DealService) : DealApi {
         return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(created.code)
     }
 
-    @PostMapping
     override fun create(@RequestBody req: CreateDealRequest): ResponseEntity<Any> {
         val created = service.create(req)
         val headers = HttpHeaders()
@@ -59,6 +55,5 @@ class DealController(private val service: DealService) : DealApi {
         return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(created.id)
     }
 
-    @PostMapping("/{id}/status")
     override fun changeStatus(@PathVariable id: Long, @RequestBody req: ChangeDealStatusRequest) = service.changeStatus(id, req)
 }
