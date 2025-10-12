@@ -193,7 +193,7 @@ class DealServiceTest {
     }
 
     @Test
-    fun `list deals returns dto list`() {
+    fun `list deals returns paged dto list`() {
         // Arrange
         val deal = Deal(
             id = 1,
@@ -203,14 +203,17 @@ class DealServiceTest {
             aircraft = aircraft(1, user(2)),
             status = DealStatus("NEW", "New", null, 10, false)
         )
-        every { dealRepository.findAll() } returns listOf(deal)
+        val pageable = mockk<org.springframework.data.domain.Pageable>()
+        val page = org.springframework.data.domain.PageImpl(listOf(deal))
+        every { dealRepository.findAll(pageable) } returns page
 
         // Act
-        val list = service.list()
+        val result = service.list(pageable)
 
         // Assert
-        assertEquals(1, list.size)
-        assertEquals("D-1", list.first().dealNumber)
+        assertEquals(1, result.content.size)
+        assertEquals("D-1", result.content[0].dealNumber)
+        verify { dealRepository.findAll(pageable) }
     }
 
     @Test

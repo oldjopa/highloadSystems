@@ -11,6 +11,7 @@ import org.oldjopa.hls.model.user.User
 import org.oldjopa.hls.repository.user.RoleRepository
 import org.oldjopa.hls.repository.user.UserRepository
 import org.oldjopa.hls.service.UserService
+import org.springframework.data.domain.Pageable
 import java.util.*
 
 class UserServiceTest {
@@ -128,15 +129,20 @@ class UserServiceTest {
     }
 
     @Test
-    fun `list returns all users`() {
+    fun `list returns paged users`() {
         // Arrange
         val users = listOf(user(1), user(2))
-        every { userRepository.findAll() } returns users
+        val pageable = mockk<Pageable>()
+        val page = org.springframework.data.domain.PageImpl(users)
+        every { userRepository.findAll(pageable) } returns page
 
         // Act
-        val result = service.list()
+        val result = service.list(pageable)
 
         // Assert
-        assertEquals(2, result.size)
+        assertEquals(2, result.content.size)
+        assertEquals(user(1).id, result.content[0].id)
+        assertEquals(user(2).id, result.content[1].id)
+        verify { userRepository.findAll(pageable) }
     }
 }
