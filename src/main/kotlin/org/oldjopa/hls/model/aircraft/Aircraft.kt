@@ -1,4 +1,4 @@
-package org.oldjopa.hls.model
+package org.oldjopa.hls.model.aircraft
 
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
@@ -12,8 +12,8 @@ import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToOne
 import jakarta.persistence.Table
 import jakarta.persistence.UniqueConstraint
-import org.oldjopa.hls.model.AircraftEquipment
-import org.oldjopa.hls.model.TechPassport
+import org.oldjopa.hls.model.feature.TechPassport
+import org.oldjopa.hls.model.user.User
 import java.math.BigDecimal
 
 @Entity

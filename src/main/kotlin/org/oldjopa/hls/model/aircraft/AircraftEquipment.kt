@@ -1,4 +1,4 @@
-package org.oldjopa.hls.model
+package org.oldjopa.hls.model.aircraft
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -9,6 +9,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import org.oldjopa.hls.model.feature.Engine
 
 @Entity
 @Table(name = "aircraft_equipment")

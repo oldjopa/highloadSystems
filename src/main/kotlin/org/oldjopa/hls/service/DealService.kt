@@ -1,20 +1,21 @@
 package org.oldjopa.hls.service
 
-import org.oldjopa.hls.repository.DealRepository
-import org.oldjopa.hls.model.DealStatusHistory
-import org.oldjopa.hls.repository.DealStatusHistoryRepository
-import org.oldjopa.hls.repository.DealStatusRepository
+import org.oldjopa.hls.repository.deal.DealRepository
+import org.oldjopa.hls.model.deal.DealStatusHistory
+import org.oldjopa.hls.repository.deal.DealStatusHistoryRepository
+import org.oldjopa.hls.repository.deal.DealStatusRepository
 import org.oldjopa.hls.dto.ChangeDealStatusRequest
 import org.oldjopa.hls.dto.CreateDealRequest
 import org.oldjopa.hls.dto.DealDto
 import org.oldjopa.hls.dto.DealStatusDto
 import org.oldjopa.hls.dto.DealStatusHistoryDto
 import org.oldjopa.hls.utls.toDto
-import org.oldjopa.hls.repository.UserRepository
-import org.oldjopa.hls.repository.AircraftRepository
+import org.oldjopa.hls.repository.user.UserRepository
+import org.oldjopa.hls.repository.aircraft.AircraftRepository
 import org.oldjopa.hls.common.exception.NotFoundException
 import org.oldjopa.hls.common.exception.ValidationException
-import org.oldjopa.hls.model.Deal
+import org.oldjopa.hls.model.deal.Deal
+import org.oldjopa.hls.model.deal.DealStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.Instant
@@ -103,7 +104,7 @@ class DealService(
             throw ValidationException("Status code already exists: ${req.code}")
         }
         val status = dealStatusRepository.save(
-            org.oldjopa.hls.model.DealStatus(
+            DealStatus(
                 code = req.code,
                 name = req.name,
                 description = req.description,

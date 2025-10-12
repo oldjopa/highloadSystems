@@ -1,10 +1,10 @@
 package org.oldjopa.hls.bootstrap
 
-import org.oldjopa.hls.repository.DealStatusRepository
-import org.oldjopa.hls.model.Role
-import org.oldjopa.hls.repository.RoleRepository
-import org.oldjopa.hls.model.User
-import org.oldjopa.hls.repository.UserRepository
+import org.oldjopa.hls.repository.deal.DealStatusRepository
+import org.oldjopa.hls.model.user.Role
+import org.oldjopa.hls.repository.user.RoleRepository
+import org.oldjopa.hls.model.user.User
+import org.oldjopa.hls.repository.user.UserRepository
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.context.annotation.Profile

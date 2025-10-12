@@ -1,4 +1,4 @@
-package org.oldjopa.hls.api.manage
+package org.oldjopa.hls.unit.deal
 
 import io.mockk.*
 import org.junit.jupiter.api.AfterEach
@@ -6,19 +6,19 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.oldjopa.hls.dto.ChangeDealStatusRequest
 import org.oldjopa.hls.dto.CreateDealRequest
-import org.oldjopa.hls.model.User
-import org.oldjopa.hls.repository.UserRepository
+import org.oldjopa.hls.model.user.User
+import org.oldjopa.hls.repository.user.UserRepository
 import org.oldjopa.hls.common.exception.ValidationException
-import org.oldjopa.hls.model.Aircraft
-import org.oldjopa.hls.model.AircraftEquipment
-import org.oldjopa.hls.model.Deal
-import org.oldjopa.hls.model.DealStatus
-import org.oldjopa.hls.model.Engine
-import org.oldjopa.hls.model.EngineType
-import org.oldjopa.hls.repository.AircraftRepository
-import org.oldjopa.hls.repository.DealRepository
-import org.oldjopa.hls.repository.DealStatusHistoryRepository
-import org.oldjopa.hls.repository.DealStatusRepository
+import org.oldjopa.hls.model.aircraft.Aircraft
+import org.oldjopa.hls.model.aircraft.AircraftEquipment
+import org.oldjopa.hls.model.deal.Deal
+import org.oldjopa.hls.model.deal.DealStatus
+import org.oldjopa.hls.model.feature.Engine
+import org.oldjopa.hls.model.feature.EngineType
+import org.oldjopa.hls.repository.aircraft.AircraftRepository
+import org.oldjopa.hls.repository.deal.DealRepository
+import org.oldjopa.hls.repository.deal.DealStatusHistoryRepository
+import org.oldjopa.hls.repository.deal.DealStatusRepository
 import org.oldjopa.hls.service.DealService
 import java.math.BigDecimal
 import java.time.Instant

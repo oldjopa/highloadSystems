@@ -1,4 +1,4 @@
-package org.oldjopa.hls.model
+package org.oldjopa.hls.model.deal
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -8,13 +8,9 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
-import jakarta.persistence.PrePersist
-import jakarta.persistence.PreUpdate
 import jakarta.persistence.Table
-import jakarta.persistence.Version
-import org.oldjopa.hls.model.DealStatus
-import org.oldjopa.hls.model.User
-import org.oldjopa.hls.model.Aircraft
+import org.oldjopa.hls.model.user.User
+import org.oldjopa.hls.model.aircraft.Aircraft
 import java.time.Instant
 
 @Entity

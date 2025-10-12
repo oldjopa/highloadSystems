@@ -1,7 +1,7 @@
 package org.oldjopa.hls.utls
 
 import org.oldjopa.hls.dto.UserDto
-import org.oldjopa.hls.model.User
+import org.oldjopa.hls.model.user.User
 
 fun User.toDto() = UserDto(
     id = id,

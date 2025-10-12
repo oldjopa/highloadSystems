@@ -1,4 +1,4 @@
-package org.oldjopa.hls.model
+package org.oldjopa.hls.model.feature
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

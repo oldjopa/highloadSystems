@@ -2,7 +2,7 @@ package org.oldjopa.hls.api
 
 import org.oldjopa.hls.dto.CreateUserDto
 import org.oldjopa.hls.dto.UpdateUserDto
-import org.oldjopa.hls.model.User
+import org.oldjopa.hls.model.user.User
 import org.springframework.http.ResponseEntity
 
 interface UserApi {

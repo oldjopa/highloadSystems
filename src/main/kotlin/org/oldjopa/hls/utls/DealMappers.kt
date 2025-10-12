@@ -3,9 +3,9 @@ package org.oldjopa.hls.utls
 import org.oldjopa.hls.dto.DealDto
 import org.oldjopa.hls.dto.DealStatusDto
 import org.oldjopa.hls.dto.DealStatusHistoryDto
-import org.oldjopa.hls.model.DealStatusHistory
-import org.oldjopa.hls.model.Deal
-import org.oldjopa.hls.model.DealStatus
+import org.oldjopa.hls.model.deal.DealStatusHistory
+import org.oldjopa.hls.model.deal.Deal
+import org.oldjopa.hls.model.deal.DealStatus
 
 fun DealStatus.toDto() = DealStatusDto(
     code = code,

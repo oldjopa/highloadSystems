@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
-import org.oldjopa.hls.model.EngineType
+import org.oldjopa.hls.model.feature.EngineType
 import java.math.BigDecimal
 
 // Read DTO

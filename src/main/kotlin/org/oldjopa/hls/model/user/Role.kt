@@ -1,4 +1,4 @@
-package org.oldjopa.hls.model
+package org.oldjopa.hls.model.user
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -6,14 +6,13 @@ import jakarta.persistence.Id
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "deal_status")
-class DealStatus(
+@Table(name = "role")
+class Role(
     @Id
-    @Column(length = 30)
-    val code: String,
+    @Column(length = 50)
     val name: String,
+
+    val level: Int,
     @Column(columnDefinition = "text")
-    val description: String?,
-    val orderIndex: Int,
-    val isTerminal: Boolean
+    val description: String? = ""
 )

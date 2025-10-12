@@ -1,5 +1,6 @@
 package org.oldjopa.hls
 
+import org.oldjopa.hls.integration.TestcontainersConfiguration
 import org.springframework.boot.fromApplication
 import org.springframework.boot.with
 

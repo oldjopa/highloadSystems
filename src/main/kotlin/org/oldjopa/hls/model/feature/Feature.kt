@@ -1,4 +1,4 @@
-package org.oldjopa.hls.model
+package org.oldjopa.hls.model.feature
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue

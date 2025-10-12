@@ -1,7 +1,7 @@
 package org.oldjopa.hls.utls
 
 import org.oldjopa.hls.dto.AircraftDto
-import org.oldjopa.hls.model.Aircraft
+import org.oldjopa.hls.model.aircraft.Aircraft
 
 
 fun Aircraft.toDto() = AircraftDto(

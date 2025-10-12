@@ -2,9 +2,9 @@ package org.oldjopa.hls.service
 
 import org.oldjopa.hls.dto.CreateUserDto
 import org.oldjopa.hls.dto.UpdateUserDto
-import org.oldjopa.hls.model.User
-import org.oldjopa.hls.repository.RoleRepository
-import org.oldjopa.hls.repository.UserRepository
+import org.oldjopa.hls.model.user.User
+import org.oldjopa.hls.repository.user.RoleRepository
+import org.oldjopa.hls.repository.user.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
