@@ -1,4 +1,4 @@
-package org.oldjopa.hls
+package org.oldjopa.hls.integration
 
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection
