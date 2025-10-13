@@ -1,0 +1,15 @@
+{
+  "id": 2,
+  "email": "buyer@example.com",
+  "phone": "+10000000002",
+  "hashedPassword": "hashed_buyer",
+  "firstName": "Buyer",
+  "lastName": "User",
+  "roles": [
+    {
+      "name": "ADMIN",
+      "level": 100,
+      "description": "Administrator with full access"
+    }
+  ]
+}

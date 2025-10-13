@@ -1,0 +1,7 @@
+{
+  "email": "newuser@example.com",
+  "phone": "+10000000004",
+  "hashedPassword": "pwd_new",
+  "firstName": "New",
+  "lastName": "User"
+}

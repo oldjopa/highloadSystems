@@ -1,0 +1,49 @@
+{
+  "content": [
+    {
+      "id": 1,
+      "email": "admin@example.com",
+      "phone": "+10000000001",
+      "hashedPassword": "hashed_admin",
+      "firstName": "Admin",
+      "lastName": "User",
+      "roles": [
+        {
+          "name": "ADMIN",
+          "level": 100,
+          "description": "Administrator with full access"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "email": "buyer@example.com",
+      "phone": "+10000000002",
+      "hashedPassword": "hashed_buyer",
+      "firstName": "Buyer",
+      "lastName": "User",
+      "roles": [
+        {
+          "name": "USER",
+          "level": 10,
+          "description": "Regular user"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "email": "seller@example.com",
+      "phone": "+10000000003",
+      "hashedPassword": "hashed_seller",
+      "firstName": "Seller",
+      "lastName": "User",
+      "roles": [
+        {
+          "name": "USER",
+          "level": 10,
+          "description": "Regular user"
+        }
+      ]
+    }
+  ]
+}
