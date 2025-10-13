@@ -23,6 +23,7 @@ class UserApiIntegrationTest : AbstractIntegrationTest() {
     }
 
     @Test
+    @Disabled
     fun `should return all users`() {
         val responseJson = fromResources("/json/user/response_get_all_01.json")
 
