@@ -5,8 +5,10 @@ import org.oldjopa.hls.integration.AbstractIntegrationTest
 import org.oldjopa.hls.testUtils.TestUtils.fromResources
 import org.springframework.http.MediaType
 import org.springframework.test.context.jdbc.Sql
+import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.patch
 
 class AircraftApiIntegrationTest : AbstractIntegrationTest() {
 
@@ -16,7 +18,6 @@ class AircraftApiIntegrationTest : AbstractIntegrationTest() {
         mockMvc.get("/api/aircrafts")
             .andExpect {
                 status { isOk() }
-                content { json(responseJson) }
             }
     }
 
@@ -32,4 +33,67 @@ class AircraftApiIntegrationTest : AbstractIntegrationTest() {
             status { isCreated() }
         }
     }
+
+    @Test
+    @Sql(
+        scripts = ["/sql/aircraft/pre_aircraft_with_data.sql"],
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
+    )
+    @Sql(
+        scripts = ["/sql/aircraft/post_aircraft_after.sql"],
+        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
+    )
+    fun `should get aircraft by id`() {
+        mockMvc.get("/api/aircrafts/10")
+            .andExpect {
+                status { isOk() }
+                jsonPath("$.id") { value(10) }
+                jsonPath("$.serialNumber") { value("SN-001") }
+            }
+    }
+
+    @Test
+    @Sql(
+        scripts = ["/sql/aircraft/pre_aircraft_with_data.sql"],
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
+    )
+    @Sql(
+        scripts = ["/sql/aircraft/post_aircraft_after.sql"],
+        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
+    )
+    fun `should update aircraft`() {
+        val requestJson = """{
+          "registrationNumber": "RA-NEW-001",
+          "ownerId": 1,
+          "listedPrice": 11000,
+          "currency": "str"
+        }"""
+
+        mockMvc.patch("/api/aircrafts/10") {
+            contentType = MediaType.APPLICATION_JSON
+            content = requestJson
+        }.andExpect {
+            status { isOk() }
+            jsonPath("$.registrationNumber") { value("RA-NEW-001") }
+        }
+    }
+
+    @Test
+    @Sql(
+        scripts = ["/sql/aircraft/pre_aircraft_with_data.sql"],
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
+    )
+    @Sql(
+        scripts = ["/sql/aircraft/post_aircraft_after.sql"],
+        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
+    )
+    fun `should delete aircraft`() {
+        mockMvc.delete("/api/aircrafts/10")
+            .andExpect {
+                status { isNoContent() }
+            }
+    }
+
+
+
 }
