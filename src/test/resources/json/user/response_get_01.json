@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "email": "admin@example.com",
+  "phone": "+10000000001",
+  "hashedPassword": "hashed_admin",
+  "firstName": "Admin",
+  "lastName": "User",
+  "roles": [
+    {
+      "name": "ADMIN",
+      "level": 100,
+      "description": "Administrator with full access"
+    }
+  ]
+}
