@@ -1,7 +1,6 @@
 package org.oldjopa.hls.integration.deal
 
 
-import org.junit.jupiter.api.Disabled
 import org.oldjopa.hls.integration.AbstractIntegrationTest
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
@@ -12,7 +11,6 @@ import org.springframework.test.web.servlet.post
 class DealApiIntegrationTest : AbstractIntegrationTest() {
 
     @Test
-    @Disabled
     @Sql(
         scripts = ["/sql/deal/pre_deal_before.sql"],
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD

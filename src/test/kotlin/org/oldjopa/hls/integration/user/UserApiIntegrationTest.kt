@@ -1,6 +1,5 @@
 package org.oldjopa.hls.integration.user
 
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.oldjopa.hls.integration.AbstractIntegrationTest
 import org.oldjopa.hls.testUtils.TestUtils.fromResources
@@ -23,17 +22,15 @@ class UserApiIntegrationTest : AbstractIntegrationTest() {
     }
 
     @Test
-    @Disabled
     fun `should return all users`() {
         val responseJson = fromResources("/json/user/response_get_all_01.json")
 
         mockMvc.get("/api/users")
             .andExpect {
                 status { isOk() }
-                content { json(responseJson, strict = false) }
+                content { json(responseJson) }
             }
     }
-
 
     @Test
     @Sql(
@@ -53,7 +50,6 @@ class UserApiIntegrationTest : AbstractIntegrationTest() {
     }
 
     @Test
-    @Disabled
     @Sql(scripts = ["/sql/user/post_assign_roles_after.sql"], executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     fun `should assign roles to user`() {
         val requestJson = fromResources("/json/user/assign_roles_request_01.json")

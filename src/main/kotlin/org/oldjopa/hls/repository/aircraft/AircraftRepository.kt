@@ -52,6 +52,8 @@ interface AircraftRepository : JpaRepository<Aircraft, Long> {
         ]
     )
     fun findProjectedById(id: Long): AircraftFullView?
+    
+    fun countByTechPassportId(tpId: Long): Long
 
     interface AircraftFullView {
         fun getId(): Long
