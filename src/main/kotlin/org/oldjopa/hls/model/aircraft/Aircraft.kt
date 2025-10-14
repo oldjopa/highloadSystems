@@ -46,6 +46,6 @@ class Aircraft(
 
     @Column(name = "registration_number")
     var registrationNumber: String?,
-    val listedPrice: BigDecimal?,
-    val currency: String?
+    var listedPrice: BigDecimal?,
+    var currency: String?
 )

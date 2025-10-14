@@ -30,20 +30,16 @@ class DealService(
     private val userRepository: UserRepository,
     private val aircraftRepository: AircraftRepository
 ) {
-    @Transactional(readOnly = true)
     fun get(id: Long): DealDto = dealRepository.findById(id).orElseThrow {
         NotFoundException("Deal $id not found")
     }.toDto()
 
-    @Transactional(readOnly = true)
     fun list(pageable: Pageable): Page<DealDto> = dealRepository.findAll(pageable).map { it.toDto() }
 
-    @Transactional(readOnly = true)
     fun listStatuses(): List<DealStatusDto> = dealStatusRepository.findAll()
         .sortedBy { it.orderIndex }
         .map { it.toDto() }
 
-    @Transactional(readOnly = true)
     fun history(dealId: Long): List<DealStatusHistoryDto> {
         ensureDealExists(dealId)
         return historyRepository.findByDealIdOrderByChangedAtAsc(dealId).map { it.toDto() }

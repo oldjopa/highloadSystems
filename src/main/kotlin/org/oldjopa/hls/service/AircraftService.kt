@@ -22,6 +22,8 @@ import org.oldjopa.hls.model.feature.Engine
 import org.oldjopa.hls.repository.feature.EngineRepository
 import java.time.Instant
 import org.springframework.data.domain.Pageable
+import java.math.BigDecimal
+import kotlin.let
 
 @Service
 class AircraftService(
@@ -38,11 +40,8 @@ class AircraftService(
     fun list(pageable: Pageable): List<AircraftDto> =
         aircraftRepository.findAll(pageable).map { it.toDto() }.content
 
-
-    @Transactional(readOnly = true)
     fun listFull() = aircraftRepository.findAllProjectedBy()
 
-    @Transactional(readOnly = true)
     fun getFull(id: Long) =
         aircraftRepository.findProjectedById(id)
             ?: throw IllegalArgumentException("Aircraft not found")
@@ -127,9 +126,14 @@ class AircraftService(
         req.ownerId?.let { ownerId ->
             a.owner = userRepository.findById(ownerId).orElseThrow { NotFoundException("User $ownerId not found") }
         }
-        // listedPrice & currency предполагаем тоже можно обновлять
-        req.listedPrice?.let { /* entity field is val, skipping unless design changes */ }
-        req.currency?.let { /* same note */ }
+        req.listedPrice?.let {
+            if (it < BigDecimal.ZERO) throw ValidationException("Listed price cannot be negative")
+            a.listedPrice = it
+        }
+        req.currency?.let {
+            if (a.listedPrice != null && it.isBlank()) throw ValidationException("Currency cannot be blank when listed price is set")
+            a.currency = it
+        }
         return a.toDto()
     }
 
