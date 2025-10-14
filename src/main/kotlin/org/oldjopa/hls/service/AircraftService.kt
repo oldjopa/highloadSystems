@@ -140,6 +140,14 @@ class AircraftService(
     @Transactional
     fun delete(id: Long) {
         if (!aircraftRepository.existsById(id)) throw NotFoundException("Aircraft $id not found")
+        val techPassport = aircraftRepository.findById(id).orElseThrow().techPassport
+        if (techPassport != null) {
+            val linkedCount = aircraftRepository.countByTechPassportId(techPassport.id)
+            if (linkedCount <= 1) {
+                techPassportRepository.deleteById(techPassport.id)
+            }
+        }
         aircraftRepository.deleteById(id)
+        techPassportRepository.deleteById(id)
     }
 }

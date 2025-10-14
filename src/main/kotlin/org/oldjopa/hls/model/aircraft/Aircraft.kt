@@ -1,6 +1,5 @@
 package org.oldjopa.hls.model.aircraft
 
-import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
@@ -33,7 +32,7 @@ class Aircraft(
     @JoinColumn(name = "type_id")
     val type: AircraftEquipment,
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tech_passport_id")
     val techPassport: TechPassport?,
 
