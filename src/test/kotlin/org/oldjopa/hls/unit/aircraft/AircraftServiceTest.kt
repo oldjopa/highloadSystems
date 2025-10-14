@@ -198,27 +198,39 @@ class AircraftServiceTest {
         assertEquals(2, dto.ownerId)
     }
 
-    @Test
-    fun `delete aircraft success`() {
-        // Arrange
-        every { aircraftRepository.existsById(1) } returns true
-        every { aircraftRepository.deleteById(1) } just Runs
+@Test
+fun `delete aircraft success`() {
+    // Arrange
+    val a = Aircraft(
+        id = 1,
+        serialNumber = "SN001",
+        registrationNumber = "REG001",
+        type = equipment(1),
+        owner = user(1),
+        techPassport = null,
+        listedPrice = BigDecimal.ONE,
+        currency = "USD"
+    )
+    every { aircraftRepository.existsById(1) } returns true
+    every { aircraftRepository.findById(1) } returns Optional.of(a)
+    every { aircraftRepository.deleteById(1) } just Runs
 
-        // Act
-        service.delete(1)
+    // Act
+    service.delete(1)
 
-        // Assert
-        verify { aircraftRepository.deleteById(1) }
-    }
+    // Assert
+    verify { aircraftRepository.deleteById(1) }
+}
 
-    @Test
-    fun `delete aircraft not found throws`() {
-        // Arrange
-        every { aircraftRepository.existsById(1) } returns false
+@Test
+fun `delete aircraft not found throws`() {
+    // Arrange
+    every { aircraftRepository.existsById(1) } returns false
+    every { aircraftRepository.findById(1) } returns Optional.empty()
 
-        // Act & Assert
-        assertFailsWith<NotFoundException> { service.delete(1) }
-    }
+    // Act & Assert
+    assertFailsWith<NotFoundException> { service.delete(1) }
+}
 
     @Test
     fun `create engine success`() {

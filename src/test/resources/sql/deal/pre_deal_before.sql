@@ -26,3 +26,11 @@ ON CONFLICT (id) DO NOTHING;
 INSERT INTO deal (id, deal_number, buyer_id, seller_id, aircraft_id, status_code, created_at, updated_at)
 VALUES (1, 1488, 200, 201, 200, 'NEW', now(), now())
 ON CONFLICT (id) DO NOTHING;
+
+-- Align sequences after inserts
+SELECT setval('app_user_id_seq', (SELECT COALESCE(MAX(id),0)+1 FROM app_user), false);
+SELECT setval('engine_id_seq', (SELECT COALESCE(MAX(id),0)+1 FROM engine), false);
+SELECT setval('aircraft_equipment_id_seq', (SELECT COALESCE(MAX(id),0)+1 FROM aircraft_equipment), false);
+SELECT setval('tech_passport_id_seq', (SELECT COALESCE(MAX(id),0)+1 FROM tech_passport), false);
+SELECT setval('aircraft_id_seq', (SELECT COALESCE(MAX(id),0)+1 FROM aircraft), false);
+SELECT setval('deal_id_seq', (SELECT COALESCE(MAX(id),0)+1 FROM deal), false);

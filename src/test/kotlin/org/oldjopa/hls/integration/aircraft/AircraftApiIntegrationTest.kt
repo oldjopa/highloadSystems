@@ -93,7 +93,4 @@ class AircraftApiIntegrationTest : AbstractIntegrationTest() {
                 status { isNoContent() }
             }
     }
-
-
-
 }

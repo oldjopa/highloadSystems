@@ -45,5 +45,11 @@
         }
       ]
     }
-  ]
+  ],
+  "page": {
+    "size": 20,
+    "number": 0,
+    "totalElements": 3,
+    "totalPages": 1
+  }
 }
