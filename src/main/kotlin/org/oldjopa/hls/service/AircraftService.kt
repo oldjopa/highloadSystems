@@ -148,6 +148,5 @@ class AircraftService(
             }
         }
         aircraftRepository.deleteById(id)
-        techPassportRepository.deleteById(id)
     }
 }
