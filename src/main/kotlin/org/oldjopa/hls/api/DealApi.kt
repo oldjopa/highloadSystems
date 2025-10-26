@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 
-@Tag(name = "Сделки", description = "API для управления сделками: создание, изменение статусов, история и статусы")
+@Tag(name = "Deals", description = "API для управления сделками: создание, изменение статусов, история и статусы")
 @RequestMapping("/api/deals")
 interface DealApi {
 

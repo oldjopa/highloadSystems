@@ -15,7 +15,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 
 @Tag(
-    name = "Пользователи",
+    name = "Users",
     description = "API для управления пользователями и их ролями"
 )
 @RequestMapping("/api/users")

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.data.domain.Pageable
 
 @Tag(
-    name = "Самолёты",
+    name = "AirCrafts",
     description = "API для управления самолётами, их типами, двигателями и техническими паспортами"
 )
 @RequestMapping("/api/aircrafts")

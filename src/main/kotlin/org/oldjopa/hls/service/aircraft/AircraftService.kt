@@ -1,41 +1,41 @@
-package org.oldjopa.hls.service
+package org.oldjopa.hls.service.aircraft
 
-import org.oldjopa.hls.model.aircraft.Aircraft
-import org.oldjopa.hls.repository.aircraft.AircraftEquipmentRepository
-import org.oldjopa.hls.repository.aircraft.AircraftRepository
-import org.oldjopa.hls.repository.feature.TechPassportRepository
-import org.oldjopa.hls.repository.user.UserRepository
-import org.oldjopa.hls.dto.CreateAircraftRequest
-import org.oldjopa.hls.dto.UpdateAircraftRequest
-import org.oldjopa.hls.dto.AircraftDto
 import org.oldjopa.hls.common.exception.NotFoundException
 import org.oldjopa.hls.common.exception.ValidationException
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
-import org.oldjopa.hls.utls.toDto
-import org.oldjopa.hls.model.aircraft.AircraftEquipment
+import org.oldjopa.hls.dto.AircraftDto
 import org.oldjopa.hls.dto.CreateAircraftEquipmentRequest
+import org.oldjopa.hls.dto.CreateAircraftRequest
 import org.oldjopa.hls.dto.CreateEngineRequest
 import org.oldjopa.hls.dto.CreateTechPassportRequest
-import org.oldjopa.hls.model.feature.TechPassport
+import org.oldjopa.hls.dto.UpdateAircraftRequest
+import org.oldjopa.hls.model.aircraft.Aircraft
+import org.oldjopa.hls.model.aircraft.AircraftEquipment
 import org.oldjopa.hls.model.feature.Engine
-import org.oldjopa.hls.repository.feature.EngineRepository
-import java.time.Instant
+import org.oldjopa.hls.model.feature.TechPassport
+import org.oldjopa.hls.repository.aircraft.AircraftRepository
+import org.oldjopa.hls.service.user.UserService
+import org.oldjopa.hls.utls.toDto
 import org.springframework.data.domain.Pageable
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
-import kotlin.let
+import java.time.Instant
 
 @Service
 class AircraftService(
     private val aircraftRepository: AircraftRepository,
-    private val equipmentRepository: AircraftEquipmentRepository,
-    private val engineRepository: EngineRepository,
-    private val techPassportRepository: TechPassportRepository,
-    private val userRepository: UserRepository
+    private val equipmentService: AircraftEquipmentService,
+    private val engineService: EngineService,
+    private val techPassportService: TechPassportService,
+    private val userService: UserService
 ) {
     fun get(id: Long): AircraftDto = aircraftRepository.findById(id).orElseThrow {
         NotFoundException("Aircraft $id not found")
     }.toDto()
+
+    fun getEntity(id: Long): Aircraft = aircraftRepository.findById(id).orElseThrow {
+        NotFoundException("Aircraft $id not found")
+    }
 
     fun list(pageable: Pageable): List<AircraftDto> =
         aircraftRepository.findAll(pageable).map { it.toDto() }.content
@@ -51,12 +51,10 @@ class AircraftService(
         if (aircraftRepository.existsBySerialNumber(req.serialNumber)) {
             throw ValidationException("Serial number already exists: ${req.serialNumber}")
         }
-        val type = equipmentRepository.findById(req.typeId)
-            .orElseThrow { NotFoundException("Equipment ${req.typeId} not found") }
-        val owner =
-            userRepository.findById(req.ownerId).orElseThrow { NotFoundException("User ${req.ownerId} not found") }
+        val type = equipmentService.get(req.typeId)
+        val owner = userService.get(req.ownerId)
         val tp = req.techPassportId?.let {
-            techPassportRepository.findById(it).orElseThrow { NotFoundException("TechPassport $it not found") }
+            techPassportService.get(it)
         }
         val saved = aircraftRepository.save(
             Aircraft(
@@ -73,8 +71,7 @@ class AircraftService(
     }
 
     fun createAircraftType(req: CreateAircraftEquipmentRequest): Long {
-        val engine = engineRepository.findById(req.engineId)
-            .orElseThrow { NotFoundException("Engine type ${req.engineCount} not found") }
+        val engine = engineService.get(req.engineId)
         val equipment = AircraftEquipment(
             manufacturer = req.manufacturer,
             model = req.model,
@@ -88,7 +85,7 @@ class AircraftService(
             cruiseSpeedKnots = req.cruiseSpeedKnots,
             pressurized = req.pressurized
         )
-        val saved = equipmentRepository.save(equipment)
+        val saved = equipmentService.save(equipment)
         return saved.id
     }
 
@@ -98,7 +95,7 @@ class AircraftService(
             type = req.type,
             power = req.power
         )
-        val saved = engineRepository.save(engine)
+        val saved = engineService.save(engine)
         return saved.id
     }
 
@@ -115,7 +112,7 @@ class AircraftService(
             createdAt = Instant.now(),
             updatedAt = Instant.now()
         )
-        val saved = techPassportRepository.save(tp)
+        val saved = techPassportService.save(tp)
         return saved.id
     }
 
@@ -124,7 +121,7 @@ class AircraftService(
         val a = aircraftRepository.findById(id).orElseThrow { NotFoundException("Aircraft $id not found") }
         req.registrationNumber?.let { a.registrationNumber = it }
         req.ownerId?.let { ownerId ->
-            a.owner = userRepository.findById(ownerId).orElseThrow { NotFoundException("User $ownerId not found") }
+            a.owner = userService.get(ownerId)
         }
         req.listedPrice?.let {
             if (it < BigDecimal.ZERO) throw ValidationException("Listed price cannot be negative")
@@ -144,7 +141,7 @@ class AircraftService(
         if (techPassport != null) {
             val linkedCount = aircraftRepository.countByTechPassportId(techPassport.id)
             if (linkedCount <= 1) {
-                techPassportRepository.deleteById(techPassport.id)
+                techPassportService.delete(techPassport.id)
             }
         }
         aircraftRepository.deleteById(id)

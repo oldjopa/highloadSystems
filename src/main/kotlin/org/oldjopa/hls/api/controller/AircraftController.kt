@@ -6,7 +6,7 @@ import org.oldjopa.hls.dto.UpdateAircraftRequest
 import org.oldjopa.hls.dto.CreateAircraftEquipmentRequest
 import org.oldjopa.hls.dto.CreateEngineRequest
 import org.oldjopa.hls.dto.CreateTechPassportRequest
-import org.oldjopa.hls.service.AircraftService
+import org.oldjopa.hls.service.aircraft.AircraftService
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

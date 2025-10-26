@@ -8,17 +8,17 @@ import org.oldjopa.hls.dto.CreateUserDto
 import org.oldjopa.hls.dto.UpdateUserDto
 import org.oldjopa.hls.model.user.Role
 import org.oldjopa.hls.model.user.User
-import org.oldjopa.hls.repository.user.RoleRepository
 import org.oldjopa.hls.repository.user.UserRepository
-import org.oldjopa.hls.service.UserService
+import org.oldjopa.hls.service.user.RoleService
+import org.oldjopa.hls.service.user.UserService
 import org.springframework.data.domain.Pageable
 import java.util.*
 
 class UserServiceTest {
 
     private val userRepository = mockk<UserRepository>()
-    private val roleRepository = mockk<RoleRepository>()
-    private val service = UserService(userRepository, roleRepository)
+    private val roleService = mockk<RoleService>()
+    private val service = UserService(userRepository, roleService)
 
     @AfterEach
     fun tearDown() {
@@ -46,7 +46,7 @@ class UserServiceTest {
             lastName = "Doe",
             roles = setOf("USER")
         )
-        every { roleRepository.findAllById(setOf("USER")) } returns listOf(role("USER"))
+        every { roleService.getAllByNames(setOf("USER")) } returns listOf(role("USER"))
         val slot = slot<User>()
         every { userRepository.save(capture(slot)) } answers {
             val u = slot.captured
@@ -93,7 +93,7 @@ class UserServiceTest {
         val u = user(1)
         u.roles.add(role("OLD"))
         every { userRepository.findById(1) } returns Optional.of(u)
-        every { roleRepository.findAllById(setOf("NEW")) } returns listOf(role("NEW"))
+        every { roleService.getAllByNames(setOf("NEW")) } returns listOf(role("NEW"))
 
         // Act
         val updated = service.assignRoles(1, setOf("NEW"))

@@ -3,7 +3,6 @@ package org.oldjopa.hls.unit.aircraft
 import io.mockk.*
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 import org.oldjopa.hls.common.exception.NotFoundException
 import org.oldjopa.hls.common.exception.ValidationException
 import org.oldjopa.hls.dto.*
@@ -12,9 +11,11 @@ import org.oldjopa.hls.model.aircraft.AircraftEquipment
 import org.oldjopa.hls.model.feature.*
 import org.oldjopa.hls.model.user.User
 import org.oldjopa.hls.repository.aircraft.*
-import org.oldjopa.hls.repository.feature.*
-import org.oldjopa.hls.repository.user.UserRepository
-import org.oldjopa.hls.service.AircraftService
+import org.oldjopa.hls.service.aircraft.AircraftEquipmentService
+import org.oldjopa.hls.service.aircraft.AircraftService
+import org.oldjopa.hls.service.aircraft.EngineService
+import org.oldjopa.hls.service.aircraft.TechPassportService
+import org.oldjopa.hls.service.user.UserService
 import java.math.BigDecimal
 import java.time.Instant
 import java.util.Optional
@@ -25,17 +26,17 @@ import kotlin.test.assertFailsWith
 class AircraftServiceTest {
 
     private val aircraftRepository = mockk<AircraftRepository>()
-    private val equipmentRepository = mockk<AircraftEquipmentRepository>()
-    private val engineRepository = mockk<EngineRepository>()
-    private val techPassportRepository = mockk<TechPassportRepository>()
-    private val userRepository = mockk<UserRepository>()
+    private val equipmentService = mockk<AircraftEquipmentService>()
+    private val engineService = mockk<EngineService>()
+    private val techPassportService = mockk<TechPassportService>()
+    private val userService = mockk<UserService>()
 
     private val service = AircraftService(
         aircraftRepository,
-        equipmentRepository,
-        engineRepository,
-        techPassportRepository,
-        userRepository
+        equipmentService,
+        engineService,
+        techPassportService,
+        userService
     )
 
     @AfterEach
@@ -98,9 +99,9 @@ class AircraftServiceTest {
             currency = "USD"
         )
         every { aircraftRepository.existsBySerialNumber(req.serialNumber) } returns false
-        every { equipmentRepository.findById(req.typeId) } returns Optional.of(equipment(1))
-        every { userRepository.findById(req.ownerId) } returns Optional.of(user(1))
-        every { techPassportRepository.findById(req.techPassportId!!) } returns Optional.of(techPassport(1))
+        every { equipmentService.get(req.typeId) } returns equipment(1)
+        every { userService.get(req.ownerId) } returns user(1)
+        every { techPassportService.get(req.techPassportId!!) } returns techPassport(1)
         val savedSlot = slot<Aircraft>()
         every { aircraftRepository.save(capture(savedSlot)) } answers {
             Aircraft(
@@ -177,7 +178,7 @@ class AircraftServiceTest {
     @Test
     fun `update aircraft owner`() {
         // Arrange
-        val a = Aircraft(
+        val aircraft = Aircraft(
             id = 1,
             serialNumber = "SN001",
             registrationNumber = "REG001",
@@ -187,8 +188,8 @@ class AircraftServiceTest {
             listedPrice = BigDecimal.ONE,
             currency = "USD"
         )
-        every { aircraftRepository.findById(1) } returns Optional.of(a)
-        every { userRepository.findById(2) } returns Optional.of(user(2))
+        every { aircraftRepository.findById(1) } returns Optional.of(aircraft)
+        every { userService.get(2) } returns user(2)
         val req = UpdateAircraftRequest(ownerId = 2)
 
         // Act
@@ -241,16 +242,16 @@ fun `delete aircraft not found throws`() {
             power = 1500.0
         )
         val slot = slot<Engine>()
-        every { engineRepository.save(capture(slot)) } answers { slot.captured }
+        every { engineService.save(capture(slot)) } answers { slot.captured }
 
         // Act
-        val id = service.createEngine(req)
+        service.createEngine(req)
 
         // Assert
         assertEquals("TurboJet X", slot.captured.name)
         assertEquals(EngineType.JET, slot.captured.type)
         assertEquals(1500.0, slot.captured.power)
-        verify { engineRepository.save(any()) }
+        verify { engineService.save(any()) }
     }
 
     @Test
@@ -267,16 +268,16 @@ fun `delete aircraft not found throws`() {
             noiseCert = "Stage 4"
         )
         val slot = slot<TechPassport>()
-        every { techPassportRepository.save(capture(slot)) } answers { slot.captured }
+        every { techPassportService.save(capture(slot)) } answers { slot.captured }
 
         // Act
-        val id = service.createTechPassport(req)
+        service.createTechPassport(req)
 
         // Assert
         assertEquals(2015, slot.captured.manufactureYear)
         assertEquals(200.0, slot.captured.flightHours)
         assertEquals("Stage 4", slot.captured.noiseCert)
-        verify { techPassportRepository.save(any()) }
+        verify { techPassportService.save(any()) }
     }
 
     @Test
@@ -288,7 +289,7 @@ fun `delete aircraft not found throws`() {
             type = EngineType.TURBOPROP,
             power = 900.0
         )
-        every { engineRepository.findById(2) } returns Optional.of(engine)
+        every { engineService.get(2) } returns engine
 
         val req = CreateAircraftEquipmentRequest(
             manufacturer = "Boeing",
@@ -304,16 +305,16 @@ fun `delete aircraft not found throws`() {
             pressurized = true
         )
         val slot = slot<AircraftEquipment>()
-        every { equipmentRepository.save(capture(slot)) } answers { slot.captured }
+        every { equipmentService.save(capture(slot)) } answers { slot.captured }
 
         // Act
-        val id = service.createAircraftType(req)
+        service.createAircraftType(req)
 
         // Assert
         assertEquals("Boeing", slot.captured.manufacturer)
         assertEquals("X200", slot.captured.model)
         assertEquals(2, slot.captured.engineCount)
         assertEquals(engine, slot.captured.engine)
-        verify { equipmentRepository.save(any()) }
+        verify { equipmentService.save(any()) }
     }
 }

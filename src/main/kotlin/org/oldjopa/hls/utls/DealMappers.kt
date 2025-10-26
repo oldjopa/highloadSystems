@@ -33,5 +33,3 @@ fun DealStatusHistory.toDto() = DealStatusHistoryDto(
     changedAt = changedAt,
     comment = comment
 )
-
-fun List<DealStatusHistory>.toDto() = map { it.toDto() }

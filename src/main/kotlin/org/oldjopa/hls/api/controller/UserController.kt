@@ -5,7 +5,7 @@ import org.oldjopa.hls.api.UserApi
 import org.oldjopa.hls.dto.CreateUserDto
 import org.oldjopa.hls.dto.UpdateUserDto
 import org.oldjopa.hls.model.user.User
-import org.oldjopa.hls.service.UserService
+import org.oldjopa.hls.service.user.UserService
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
