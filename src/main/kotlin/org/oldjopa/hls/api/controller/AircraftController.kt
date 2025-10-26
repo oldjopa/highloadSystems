@@ -1,12 +1,10 @@
 package org.oldjopa.hls.api.controller
 
 import org.oldjopa.hls.api.AircraftApi
-import org.oldjopa.hls.dto.CreateAircraftRequest
-import org.oldjopa.hls.dto.UpdateAircraftRequest
-import org.oldjopa.hls.dto.CreateAircraftEquipmentRequest
-import org.oldjopa.hls.dto.CreateEngineRequest
-import org.oldjopa.hls.dto.CreateTechPassportRequest
+import org.oldjopa.hls.dto.*
 import org.oldjopa.hls.service.AircraftService
+import org.springdoc.core.annotations.ParameterObject
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.data.domain.Pageable
-import org.springdoc.core.annotations.ParameterObject
 
 @RestController
 @Validated

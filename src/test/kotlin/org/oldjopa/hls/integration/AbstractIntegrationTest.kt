@@ -1,7 +1,6 @@
 package org.oldjopa.hls.integration
 
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestInstance
 import org.oldjopa.hls.integration.configuration.TestContainersConfig
 import org.oldjopa.hls.integration.util.DatabaseResetter

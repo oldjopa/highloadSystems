@@ -1,8 +1,8 @@
 package org.oldjopa.hls.integration.deal
 
 
-import org.oldjopa.hls.integration.AbstractIntegrationTest
 import org.junit.jupiter.api.Test
+import org.oldjopa.hls.integration.AbstractIntegrationTest
 import org.springframework.http.MediaType
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.get

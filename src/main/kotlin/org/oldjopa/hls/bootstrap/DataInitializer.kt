@@ -1,16 +1,16 @@
 package org.oldjopa.hls.bootstrap
 
-import org.oldjopa.hls.repository.deal.DealStatusRepository
 import org.oldjopa.hls.model.user.Role
-import org.oldjopa.hls.repository.user.RoleRepository
 import org.oldjopa.hls.model.user.User
+import org.oldjopa.hls.repository.deal.DealStatusRepository
+import org.oldjopa.hls.repository.user.RoleRepository
 import org.oldjopa.hls.repository.user.UserRepository
+import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import org.slf4j.LoggerFactory
 
 /**
  * Simple data seeding for local/dev profile. Liquibase seeds the statuses; here we add roles & sample users if missing.

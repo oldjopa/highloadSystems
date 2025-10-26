@@ -5,10 +5,10 @@ import org.oldjopa.hls.dto.UpdateUserDto
 import org.oldjopa.hls.model.user.User
 import org.oldjopa.hls.repository.user.RoleRepository
 import org.oldjopa.hls.repository.user.UserRepository
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserService(
@@ -25,7 +25,7 @@ class UserService(
             User(
                 email = newUser.email,
                 phone = newUser.phone,
-                hashedPassword = newUser.hashedPassword,
+                hashedPassword = "",
                 firstName = newUser.firstName,
                 lastName = newUser.lastName,
                 roles = roles
@@ -38,7 +38,7 @@ class UserService(
         val u = get(id)
         newData.firstName?.let { u.firstName = it }
         newData.lastName?.let { u.lastName = it }
-        newData.hashedPassword?.let { u.hashedPassword = it }
+//        newData.hashedPassword?.let { u.hashedPassword = it }
         return u
     }
 

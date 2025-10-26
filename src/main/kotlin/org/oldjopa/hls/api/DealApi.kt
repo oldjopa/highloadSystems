@@ -8,10 +8,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.oldjopa.hls.dto.*
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 @Tag(name = "Сделки", description = "API для управления сделками: создание, изменение статусов, история и статусы")
 @RequestMapping("/api/deals")
@@ -71,19 +71,6 @@ interface DealApi {
     )
     fun create(
         @Valid @RequestBody req: CreateDealRequest
-    ): ResponseEntity<Any>
-
-    @PostMapping("/statuses/create")
-    @Operation(
-        summary = "Создать новый статус сделки",
-        description = "Добавляет новый возможный статус для сделок",
-        responses = [
-            ApiResponse(responseCode = "201", description = "Статус успешно создан"),
-            ApiResponse(responseCode = "422", description = "Ошибка валидации", content = [Content()])
-        ]
-    )
-    fun createStatus(
-        @Valid @RequestBody req: CreateStatusRequest
     ): ResponseEntity<Any>
 
     @PostMapping("/{id}/status")
