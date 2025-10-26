@@ -41,13 +41,6 @@ class DealController(
 
     override fun statuses() = statusService.list()
 
-    override fun createStatus(@RequestBody req: CreateStatusRequest): ResponseEntity<Any> {
-        val created = statusService.create(req)
-        val headers = HttpHeaders()
-        headers.add(HttpHeaders.LOCATION, "/api/deals/statuses/${created.code}")
-        return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(created.code)
-    }
-
     override fun create(@RequestBody req: CreateDealRequest): ResponseEntity<Any> {
         val created = service.create(req)
         val headers = HttpHeaders()

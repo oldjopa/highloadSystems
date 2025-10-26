@@ -25,7 +25,7 @@ class UserService(
             User(
                 email = newUser.email,
                 phone = newUser.phone,
-                hashedPassword = newUser.hashedPassword,
+                hashedPassword = "",
                 firstName = newUser.firstName,
                 lastName = newUser.lastName,
                 roles = roles
@@ -38,7 +38,7 @@ class UserService(
         val u = get(id)
         newData.firstName?.let { u.firstName = it }
         newData.lastName?.let { u.lastName = it }
-        newData.hashedPassword?.let { u.hashedPassword = it }
+//        newData.hashedPassword?.let { u.hashedPassword = it }
         return u
     }
 

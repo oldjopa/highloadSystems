@@ -6,9 +6,9 @@ import org.oldjopa.hls.testUtils.TestUtils.fromResources
 import org.springframework.http.MediaType
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.delete
-import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.patch
+import org.springframework.test.web.servlet.post
 
 class AircraftApiIntegrationTest : AbstractIntegrationTest() {
 

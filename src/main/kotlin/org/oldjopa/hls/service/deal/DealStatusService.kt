@@ -23,18 +23,4 @@ class DealStatusService(
             .map { it.toDto() }
 
     fun exists(code: String): Boolean = dealStatusRepository.existsById(code)
-
-    fun create(req: CreateStatusRequest): DealStatusDto {
-        if (dealStatusRepository.existsById(req.code)) {
-            throw ValidationException("Status code already exists: ${req.code}")
-        }
-        val status = DealStatus(
-            code = req.code,
-            name = req.name,
-            description = req.description,
-            orderIndex = req.orderIndex,
-            isTerminal = req.isTerminal
-        )
-        return dealStatusRepository.save(status).toDto()
-    }
 }

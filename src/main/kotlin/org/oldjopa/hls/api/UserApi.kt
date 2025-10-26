@@ -9,10 +9,10 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.oldjopa.hls.dto.CreateUserDto
 import org.oldjopa.hls.dto.UpdateUserDto
 import org.oldjopa.hls.model.user.User
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 @Tag(
     name = "Users",
