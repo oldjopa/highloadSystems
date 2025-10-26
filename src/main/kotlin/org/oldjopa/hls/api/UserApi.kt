@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @Tag(
-    name = "Пользователи",
+    name = "Users",
     description = "API для управления пользователями и их ролями"
 )
 @RequestMapping("/api/users")

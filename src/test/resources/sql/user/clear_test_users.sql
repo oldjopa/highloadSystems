@@ -1,5 +1,2 @@
-DELETE FROM deal_status_history;
-DELETE FROM user_role;
-DELETE FROM deal;
-DELETE FROM aircraft;
-DELETE FROM app_user;
+DELETE FROM user_role WHERE user_id IN (SELECT id FROM app_user WHERE email LIKE 'newuser%@example.com');
+DELETE FROM app_user WHERE email LIKE 'newuser%@example.com';
