@@ -2,7 +2,8 @@ package org.oldjopa.hls.unit.user
 
 import io.mockk.*
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.oldjopa.hls.dto.CreateUserDto
 import org.oldjopa.hls.dto.UpdateUserDto
@@ -41,7 +42,6 @@ class UserServiceTest {
         val dto = CreateUserDto(
             email = "new@example.com",
             phone = "123",
-            hashedPassword = "pwd",
             firstName = "John",
             lastName = "Doe",
             roles = setOf("USER")
@@ -76,7 +76,7 @@ class UserServiceTest {
         // Arrange
         val u = user(1)
         every { userRepository.findById(1) } returns Optional.of(u)
-        val dto = UpdateUserDto(firstName = "Jane", lastName = "Smith", hashedPassword = "newpwd")
+        val dto = UpdateUserDto(firstName = "Jane", lastName = "Smith")
 
         // Act
         val updated = service.update(1, dto)

@@ -1,29 +1,23 @@
 package org.oldjopa.hls.service
 
-import org.oldjopa.hls.model.aircraft.Aircraft
-import org.oldjopa.hls.repository.aircraft.AircraftEquipmentRepository
-import org.oldjopa.hls.repository.aircraft.AircraftRepository
-import org.oldjopa.hls.repository.feature.TechPassportRepository
-import org.oldjopa.hls.repository.user.UserRepository
-import org.oldjopa.hls.dto.CreateAircraftRequest
-import org.oldjopa.hls.dto.UpdateAircraftRequest
-import org.oldjopa.hls.dto.AircraftDto
 import org.oldjopa.hls.common.exception.NotFoundException
 import org.oldjopa.hls.common.exception.ValidationException
+import org.oldjopa.hls.dto.*
+import org.oldjopa.hls.model.aircraft.Aircraft
+import org.oldjopa.hls.model.aircraft.AircraftEquipment
+import org.oldjopa.hls.model.feature.Engine
+import org.oldjopa.hls.model.feature.TechPassport
+import org.oldjopa.hls.repository.aircraft.AircraftEquipmentRepository
+import org.oldjopa.hls.repository.aircraft.AircraftRepository
+import org.oldjopa.hls.repository.feature.EngineRepository
+import org.oldjopa.hls.repository.feature.TechPassportRepository
+import org.oldjopa.hls.repository.user.UserRepository
+import org.oldjopa.hls.utls.toDto
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.oldjopa.hls.utls.toDto
-import org.oldjopa.hls.model.aircraft.AircraftEquipment
-import org.oldjopa.hls.dto.CreateAircraftEquipmentRequest
-import org.oldjopa.hls.dto.CreateEngineRequest
-import org.oldjopa.hls.dto.CreateTechPassportRequest
-import org.oldjopa.hls.model.feature.TechPassport
-import org.oldjopa.hls.model.feature.Engine
-import org.oldjopa.hls.repository.feature.EngineRepository
-import java.time.Instant
-import org.springframework.data.domain.Pageable
 import java.math.BigDecimal
-import kotlin.let
+import java.time.Instant
 
 @Service
 class AircraftService(

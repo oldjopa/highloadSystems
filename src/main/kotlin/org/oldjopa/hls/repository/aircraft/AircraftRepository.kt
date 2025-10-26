@@ -47,8 +47,8 @@ interface AircraftRepository : JpaRepository<Aircraft, Long> {
             "type",
             "type.engine",
             "techPassport",
-            "techPassport.type",
-            "techPassport.type.engine"
+//            "techPassport.type",
+//            "techPassport.type.engine"
         ]
     )
     fun findProjectedById(id: Long): AircraftFullView?

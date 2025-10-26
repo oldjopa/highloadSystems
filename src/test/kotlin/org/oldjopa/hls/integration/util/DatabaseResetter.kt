@@ -1,12 +1,12 @@
 package org.oldjopa.hls.integration.util
 
+import liquibase.Contexts
+import liquibase.LabelExpression
 import liquibase.Liquibase
 import liquibase.database.DatabaseFactory
 import liquibase.database.jvm.JdbcConnection
 import liquibase.exception.LiquibaseException
 import liquibase.resource.ClassLoaderResourceAccessor
-import liquibase.Contexts
-import liquibase.LabelExpression
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import javax.sql.DataSource

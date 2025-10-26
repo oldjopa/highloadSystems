@@ -1,5 +1,6 @@
 package org.oldjopa.hls.common.web
 
+import jakarta.persistence.OptimisticLockException
 import org.oldjopa.hls.common.exception.BusinessException
 import org.oldjopa.hls.common.exception.NotFoundException
 import org.oldjopa.hls.common.exception.ValidationException
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.context.request.ServletWebRequest
 import java.time.Instant
-import jakarta.persistence.OptimisticLockException
-import org.oldjopa.hls.common.web.TraceIdHolder
 
 @RestControllerAdvice
 class GlobalExceptionHandler {

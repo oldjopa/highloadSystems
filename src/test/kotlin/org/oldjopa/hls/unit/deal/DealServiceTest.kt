@@ -5,11 +5,9 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.oldjopa.hls.common.exception.NotFoundException
+import org.oldjopa.hls.common.exception.ValidationException
 import org.oldjopa.hls.dto.ChangeDealStatusRequest
 import org.oldjopa.hls.dto.CreateDealRequest
-import org.oldjopa.hls.model.user.User
-import org.oldjopa.hls.repository.user.UserRepository
-import org.oldjopa.hls.common.exception.ValidationException
 import org.oldjopa.hls.model.aircraft.Aircraft
 import org.oldjopa.hls.model.aircraft.AircraftEquipment
 import org.oldjopa.hls.model.deal.Deal
@@ -17,10 +15,12 @@ import org.oldjopa.hls.model.deal.DealStatus
 import org.oldjopa.hls.model.deal.DealStatusHistory
 import org.oldjopa.hls.model.feature.Engine
 import org.oldjopa.hls.model.feature.EngineType
+import org.oldjopa.hls.model.user.User
 import org.oldjopa.hls.repository.aircraft.AircraftRepository
 import org.oldjopa.hls.repository.deal.DealRepository
 import org.oldjopa.hls.repository.deal.DealStatusHistoryRepository
 import org.oldjopa.hls.repository.deal.DealStatusRepository
+import org.oldjopa.hls.repository.user.UserRepository
 import org.oldjopa.hls.service.DealService
 import java.math.BigDecimal
 import java.time.Instant
