@@ -11,6 +11,7 @@ import org.oldjopa.hls.repository.deal.DealRepository
 import org.oldjopa.hls.service.aircraft.AircraftService
 import org.oldjopa.hls.service.user.UserService
 import org.oldjopa.hls.utls.toDto
+import org.springframework.context.annotation.Lazy
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -23,6 +24,7 @@ class DealService(
     private val dealStatusService: DealStatusService,
     private val historyService: DealStatusHistoryService,
     private val userService: UserService,
+    @Lazy
     private val aircraftService: AircraftService
 ) {
     fun get(id: Long): DealDto = dealRepository.findById(id).orElseThrow {
@@ -81,5 +83,9 @@ class DealService(
             )
         )
         return deal.toDto()
+    }
+
+    fun deleteAllByAircraftId(id: Long) {
+        dealRepository.deleteAllByAircraftId(id)
     }
 }

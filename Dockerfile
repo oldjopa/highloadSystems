@@ -10,8 +10,8 @@ COPY gradle gradle
 COPY src src
 
 # Ensure gradlew is executable (Linux containers)
-RUN chmod +x gradlew || echo "Skip chmod on Windows filesystem" \
-    && ./gradlew bootJar --no-daemon -x test
+RUN chmod +x gradlew
+RUN ./gradlew bootJar --no-daemon -x test
 
 FROM eclipse-temurin:17-jre
 WORKDIR /app

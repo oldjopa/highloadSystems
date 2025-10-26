@@ -13,6 +13,7 @@ import org.oldjopa.hls.model.aircraft.AircraftEquipment
 import org.oldjopa.hls.model.feature.Engine
 import org.oldjopa.hls.model.feature.TechPassport
 import org.oldjopa.hls.repository.aircraft.AircraftRepository
+import org.oldjopa.hls.service.deal.DealService
 import org.oldjopa.hls.service.user.UserService
 import org.oldjopa.hls.utls.toDto
 import org.springframework.data.domain.Pageable
@@ -27,7 +28,8 @@ class AircraftService(
     private val equipmentService: AircraftEquipmentService,
     private val engineService: EngineService,
     private val techPassportService: TechPassportService,
-    private val userService: UserService
+    private val userService: UserService,
+    private val dealService: DealService
 ) {
     fun get(id: Long): AircraftDto = aircraftRepository.findById(id).orElseThrow {
         NotFoundException("Aircraft $id not found")
@@ -144,6 +146,7 @@ class AircraftService(
                 techPassportService.delete(techPassport.id)
             }
         }
+        dealService.deleteAllByAircraftId(id)
         aircraftRepository.deleteById(id)
     }
 }
