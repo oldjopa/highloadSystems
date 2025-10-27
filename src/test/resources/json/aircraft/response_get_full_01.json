@@ -1,10 +1,11 @@
 {
+  "registrationNumber": "TEST",
   "id": 11,
   "type": {
+    "maxTakeoffWeightKg": 3970,
+    "cruiseSpeedKnots": 186,
     "id": 1,
     "variant": "EX",
-    "cruiseSpeedKnots": 186,
-    "maxTakeoffWeightKg": 3970,
     "engine": {
       "name": "Pratt & Whitney PT6A",
       "id": 1,
@@ -12,26 +13,25 @@
       "power": 750.0
     },
     "rangeKm": 1200,
-    "model": "208B Grand Caravan",
+    "manufacturer": "Cessna",
     "maxSeats": 14,
-    "engineCount": 1,
     "pressurized": true,
-    "manufacturer": "Cessna"
+    "model": "208B Grand Caravan",
+    "engineCount": 1
   },
   "currency": "123",
-  "registrationNumber": "TEST",
   "serialNumber": "TEST",
-  "listedPrice": 100.00,
   "ownerId": 1,
+  "listedPrice": 100.00,
   "techPassport": {
-    "id": 1,
-    "flightHours": 1500.0,
-    "manufactureYear": 2015,
-    "emptyWeightKg": 2200,
-    "noiseCert": "Stage 3",
-    "fuelCapacityL": 1300,
-    "wingspanM": 15.9,
-    "lengthM": 12.7,
-    "heightM": 4.6
+    "id": 2,
+    "flightHours": 100.0,
+    "fuelCapacityL": 100,
+    "lengthM": 10.0,
+    "manufactureYear": 1980,
+    "wingspanM": 10.0,
+    "emptyWeightKg": 100,
+    "heightM": 10.0,
+    "noiseCert": "NONE"
   }
 }

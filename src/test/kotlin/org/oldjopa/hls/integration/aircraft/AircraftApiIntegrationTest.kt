@@ -22,6 +22,7 @@ class AircraftApiIntegrationTest : AbstractIntegrationTest() {
     }
 
     @Test
+    @Sql(scripts = ["sql/aircraft/create_aircraft_before.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = ["/sql/aircraft/aircraft_after.sql"], executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     fun `should create aircraft`() {
         val requestJson = fromResources("/json/aircraft/create_request_01.json")
@@ -78,21 +79,21 @@ class AircraftApiIntegrationTest : AbstractIntegrationTest() {
         }
     }
 
-//    @Test
-//    @Sql(
-//        scripts = ["/sql/aircraft/aircraft_with_data.sql"],
-//        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
-//    )
-//    @Sql(
-//        scripts = ["/sql/aircraft/aircraft_after.sql"],
-//        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
-//    )
-//    fun `should delete aircraft`() {
-//        mockMvc.delete("/api/aircrafts/10")
-//            .andExpect {
-//                status { isNoContent() }
-//            }
-//    }
+    @Test
+    @Sql(
+        scripts = ["/sql/aircraft/aircraft_with_data.sql"],
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
+    )
+    @Sql(
+        scripts = ["/sql/aircraft/aircraft_after.sql"],
+        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
+    )
+    fun `should delete aircraft`() {
+        mockMvc.delete("/api/aircrafts/10")
+            .andExpect {
+                status { isNoContent() }
+            }
+    }
 
     @Test
     @Sql(
