@@ -104,8 +104,8 @@ CREATE TABLE IF NOT EXISTS aircraft
 (
     id                  bigserial PRIMARY KEY,
     type_id             bigint       NOT NULL REFERENCES aircraft_equipment (id),
-    tech_passport_id    bigint REFERENCES tech_passport (id),
-    owner_id            bigint       NOT NULL REFERENCES app_user (id),
+    tech_passport_id    bigint REFERENCES tech_passport (id) UNIQUE,
+    owner_id            bigint       REFERENCES app_user (id) ON DELETE SET NULL,
     serial_number       varchar(255) NOT NULL,
     registration_number varchar(255),
     listed_price        numeric(19, 2),
@@ -139,9 +139,9 @@ CREATE TABLE IF NOT EXISTS deal
 (
     id          bigserial PRIMARY KEY,
     deal_number varchar(255)             NOT NULL,
-    aircraft_id bigint                   NOT NULL REFERENCES aircraft (id),
-    buyer_id    bigint                   NOT NULL REFERENCES app_user (id),
-    seller_id   bigint                   NOT NULL REFERENCES app_user (id),
+    aircraft_id bigint                   REFERENCES aircraft (id) ON DELETE SET NULL,
+    buyer_id    bigint                   REFERENCES app_user (id) ON DELETE SET NULL,
+    seller_id   bigint                   REFERENCES app_user (id) ON DELETE SET NULL,
     status_code varchar(30)              NOT NULL REFERENCES deal_status (code),
     is_active   boolean                  NOT NULL DEFAULT true,
     closed_at   timestamp with time zone,
@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS deal_status_history
     id          bigserial PRIMARY KEY,
     deal_id     bigint                   NOT NULL REFERENCES deal (id) ON DELETE CASCADE,
     status_code varchar(30)              NOT NULL REFERENCES deal_status (code),
-    changed_by  bigint                   NOT NULL REFERENCES app_user (id),
+    changed_by  bigint                   REFERENCES app_user (id) ON DELETE SET NULL,
     changed_at  timestamp with time zone NOT NULL default now(),
     comment     text
 );

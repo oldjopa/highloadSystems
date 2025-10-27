@@ -1,12 +1,13 @@
 package org.oldjopa.hls.dto
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies
+import com.fasterxml.jackson.databind.annotation.JsonNaming
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 import java.time.Instant
 
 // Read DTOs
-
 data class DealStatusDto(
     val code: String,
     val name: String,
@@ -15,13 +16,12 @@ data class DealStatusDto(
     val isTerminal: Boolean
 )
 
-
 data class DealDto(
     val id: Long,
     val dealNumber: String,
-    val aircraft: AircraftDto,
-    val buyer: UserDto,
-    val seller: UserDto,
+    val aircraft: AircraftDto?,
+    val buyer: UserDto?,
+    val seller: UserDto?,
     val status: DealStatusDto,
     val isActive: Boolean,
     val closedAt: Instant?
@@ -30,13 +30,12 @@ data class DealDto(
 data class DealStatusHistoryDto(
     val id: Long,
     val status: DealStatusDto,
-    val changedByUserId: Long,
+    val changedByUserId: Long?,
     val changedAt: Instant,
     val comment: String?
 )
 
 // Request DTOs
-
 data class CreateDealRequest(
     @field:NotBlank @field:Size(max = 255)
     val dealNumber: String,

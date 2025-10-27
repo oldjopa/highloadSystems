@@ -2,9 +2,9 @@
   "id": 2,
   "email": "buyer@example.com",
   "phone": "+10000000002",
-  "hashedPassword": "hashed_buyer",
-  "firstName": "Buyer",
-  "lastName": "User",
+  "hashed_password": "hashed_buyer",
+  "first_name": "Buyer",
+  "last_name": "User",
   "roles": [
     {
       "name": "ADMIN",

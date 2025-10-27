@@ -2,9 +2,9 @@
   "id": 1,
   "email": "admin@example.com",
   "phone": "+10000000001",
-  "hashedPassword": "hashed_admin",
-  "firstName": "Admin",
-  "lastName": "User",
+  "hashed_password": "hashed_admin",
+  "first_name": "Admin",
+  "last_name": "User",
   "roles": [
     {
       "name": "ADMIN",

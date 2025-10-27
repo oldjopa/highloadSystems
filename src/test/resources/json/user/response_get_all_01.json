@@ -4,9 +4,9 @@
       "id": 1,
       "email": "admin@example.com",
       "phone": "+10000000001",
-      "hashedPassword": "hashed_admin",
-      "firstName": "Admin",
-      "lastName": "User",
+      "hashed_password": "hashed_admin",
+      "first_name": "Admin",
+      "last_name": "User",
       "roles": [
         {
           "name": "ADMIN",
@@ -19,9 +19,9 @@
       "id": 2,
       "email": "buyer@example.com",
       "phone": "+10000000002",
-      "hashedPassword": "hashed_buyer",
-      "firstName": "Buyer",
-      "lastName": "User",
+      "hashed_password": "hashed_buyer",
+      "first_name": "Buyer",
+      "last_name": "User",
       "roles": [
         {
           "name": "USER",
@@ -34,9 +34,9 @@
       "id": 3,
       "email": "seller@example.com",
       "phone": "+10000000003",
-      "hashedPassword": "hashed_seller",
-      "firstName": "Seller",
-      "lastName": "User",
+      "hashed_password": "hashed_seller",
+      "first_name": "Seller",
+      "last_name": "User",
       "roles": [
         {
           "name": "USER",
@@ -49,7 +49,7 @@
   "page": {
     "size": 20,
     "number": 0,
-    "totalElements": 3,
-    "totalPages": 1
+    "total_elements": 3,
+    "total_pages": 1
   }
 }

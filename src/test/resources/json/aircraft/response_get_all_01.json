@@ -1,12 +1,12 @@
 [
   {
     "id": 1,
-    "typeId": 1,
-    "techPassportId": 1,
-    "ownerId": 3,
-    "serialNumber": "SN-123",
-    "registrationNumber": "RA-12345",
-    "listedPrice": 1500000.00,
+    "type_id": 1,
+    "tech_passport_id": 1,
+    "owner_id": 3,
+    "serial_number": "SN-123",
+    "registration_number": "RA-12345",
+    "listed_price": 1500000.00,
     "currency": "USD"
   }
 ]
