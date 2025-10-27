@@ -17,11 +17,11 @@ class DealApiIntegrationTest : AbstractIntegrationTest() {
     )
     fun `should create deal`() {
         val requestJson = """{
-            "dealNumber": "123",
-            "aircraftId": 1,
-            "buyerId": 1,
-            "sellerId": 2,
-            "initialStatus": "NEW"
+            "deal_number": "123",
+            "aircraft_id": 1,
+            "buyer_id": 1,
+            "seller_id": 2,
+            "initial_status": "NEW"
             }"""
 
         mockMvc.post("/api/deals") {
@@ -65,8 +65,8 @@ class DealApiIntegrationTest : AbstractIntegrationTest() {
     )
     fun `should update deal status`() {
         val requestJson = """{
-              "statusCode": "NEW",
-              "changedBy": 1,
+              "status_code": "NEW",
+              "changed_by": 1,
               "comment": "TEST"
             }"""
 

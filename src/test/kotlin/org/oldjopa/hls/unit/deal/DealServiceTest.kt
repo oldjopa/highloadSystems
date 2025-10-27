@@ -78,9 +78,9 @@ class DealServiceTest {
         assertEquals(1, dto.id)
         assertEquals("D-1", dto.dealNumber)
         assertEquals(status.code, dto.status.code)
-        assertEquals(buyer.id, dto.buyer.id)
-        assertEquals(seller.id, dto.seller.id)
-        assertEquals(aircraft.id, dto.aircraft.id)
+        assertEquals(buyer.id, dto.buyer?.id)
+        assertEquals(seller.id, dto.seller?.id)
+        assertEquals(aircraft.id, dto.aircraft?.id)
         verify(exactly = 1) { historyService.save(any()) }
     }
 

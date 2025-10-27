@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Size
 import java.time.Instant
 
 // Read DTOs
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class DealStatusDto(
     val code: String,
     val name: String,
@@ -17,7 +16,6 @@ data class DealStatusDto(
     val isTerminal: Boolean
 )
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class DealDto(
     val id: Long,
     val dealNumber: String,
@@ -29,7 +27,6 @@ data class DealDto(
     val closedAt: Instant?
 )
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class DealStatusHistoryDto(
     val id: Long,
     val status: DealStatusDto,
@@ -39,7 +36,6 @@ data class DealStatusHistoryDto(
 )
 
 // Request DTOs
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class CreateDealRequest(
     @field:NotBlank @field:Size(max = 255)
     val dealNumber: String,
@@ -53,7 +49,6 @@ data class CreateDealRequest(
     val initialStatus: String
 )
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class ChangeDealStatusRequest(
     @field:NotBlank
     val statusCode: String,
@@ -62,7 +57,6 @@ data class ChangeDealStatusRequest(
     val comment: String?
 )
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class CreateStatusRequest(
     @field:NotBlank @field:Size(max = 30)
     val code: String,

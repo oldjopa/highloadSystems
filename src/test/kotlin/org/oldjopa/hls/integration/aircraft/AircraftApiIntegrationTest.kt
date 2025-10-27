@@ -49,7 +49,7 @@ class AircraftApiIntegrationTest : AbstractIntegrationTest() {
             .andExpect {
                 status { isOk() }
                 jsonPath("$.id") { value(10) }
-                jsonPath("$.serialNumber") { value("SN-001") }
+                jsonPath("$.serial_number") { value("SN-001") }
             }
     }
 
@@ -64,9 +64,9 @@ class AircraftApiIntegrationTest : AbstractIntegrationTest() {
     )
     fun `should update aircraft`() {
         val requestJson = """{
-          "registrationNumber": "RA-NEW-001",
-          "ownerId": 1,
-          "listedPrice": 11000,
+          "registration_number": "RA-NEW-001",
+          "owner_id": 1,
+          "listed_price": 11000,
           "currency": "str"
         }"""
 
@@ -75,7 +75,7 @@ class AircraftApiIntegrationTest : AbstractIntegrationTest() {
             content = requestJson
         }.andExpect {
             status { isOk() }
-            jsonPath("$.registrationNumber") { value("RA-NEW-001") }
+            jsonPath("$.registration_number") { value("RA-NEW-001") }
         }
     }
 

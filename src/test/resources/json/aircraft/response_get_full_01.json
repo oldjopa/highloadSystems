@@ -1,9 +1,9 @@
 {
-  "registrationNumber": "TEST",
+  "registration_number": "TEST",
   "id": 11,
   "type": {
-    "maxTakeoffWeightKg": 3970,
-    "cruiseSpeedKnots": 186,
+    "max_takeoff_weight_kg": 3970,
+    "cruise_speed_knots": 186,
     "id": 1,
     "variant": "EX",
     "engine": {
@@ -12,26 +12,26 @@
       "type": "TURBOPROP",
       "power": 750.0
     },
-    "rangeKm": 1200,
+    "range_km": 1200,
     "manufacturer": "Cessna",
-    "maxSeats": 14,
+    "max_seats": 14,
     "pressurized": true,
     "model": "208B Grand Caravan",
-    "engineCount": 1
+    "engine_count": 1
   },
   "currency": "123",
-  "serialNumber": "TEST",
-  "ownerId": 1,
-  "listedPrice": 100.00,
-  "techPassport": {
+  "serial_number": "TEST",
+  "owner_id": 1,
+  "listed_price": 100.00,
+  "tech_passport": {
     "id": 2,
-    "flightHours": 100.0,
-    "fuelCapacityL": 100,
-    "lengthM": 10.0,
-    "manufactureYear": 1980,
-    "wingspanM": 10.0,
-    "emptyWeightKg": 100,
-    "heightM": 10.0,
-    "noiseCert": "NONE"
+    "flight_hours": 100.0,
+    "fuel_capacity_l": 100,
+    "length_m": 10.0,
+    "manufacture_year": 1980,
+    "wingspan_m": 10.0,
+    "empty_weight_kg": 100,
+    "height_m": 10.0,
+    "noise_cert": "NONE"
   }
 }

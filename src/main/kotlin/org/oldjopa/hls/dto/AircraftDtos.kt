@@ -8,7 +8,6 @@ import org.oldjopa.hls.model.feature.EngineType
 import java.math.BigDecimal
 
 // Read DTO
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class AircraftDto(
     @Schema(example = "1") val id: Long,
     @Schema(example = "10") val typeId: Long,
@@ -21,7 +20,6 @@ data class AircraftDto(
 )
 
 // Request DTOs
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class CreateAircraftRequest(
     @field:NotNull
     val typeId: Long,
@@ -37,7 +35,6 @@ data class CreateAircraftRequest(
     val currency: String?
 )
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class UpdateAircraftRequest(
     @field:Size(max = 255)
     val registrationNumber: String? = null,
@@ -47,7 +44,6 @@ data class UpdateAircraftRequest(
     val currency: String? = null
 )
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class CreateAircraftEquipmentRequest(
     @field:NotBlank @field:Size(max = 100)
     val manufacturer: String,
@@ -72,7 +68,6 @@ data class CreateAircraftEquipmentRequest(
     val pressurized: Boolean
 )
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class CreateEngineRequest(
     @field:NotNull @field:Size(max = 100)
     val name: String,
@@ -82,7 +77,6 @@ data class CreateEngineRequest(
     val power: Double,
 )
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class CreateTechPassportRequest(
     @field:NotNull @field:Max(1000000)
     val flightHours: Double,

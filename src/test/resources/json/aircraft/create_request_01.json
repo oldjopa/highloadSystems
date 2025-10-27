@@ -1,9 +1,9 @@
 {
-  "typeId": 1,
-  "techPassportId": 2,
-  "ownerId": 1,
-  "serialNumber": "string",
-  "registrationNumber": "string",
-  "listedPrice": 10,
+  "type_id": 1,
+  "tech_passport_id": 2,
+  "owner_id": 1,
+  "serial_number": "string",
+  "registration_number": "string",
+  "listed_price": 10,
   "currency": "str"
 }
