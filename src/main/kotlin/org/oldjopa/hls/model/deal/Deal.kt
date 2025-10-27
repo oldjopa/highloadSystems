@@ -13,11 +13,11 @@ class Deal(
     @Column(unique = true)
     val dealNumber: String,
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "aircraft_id")
-    val aircraft: Aircraft,
+    val aircraft: Aircraft?,
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "buyer_id")
-    var buyer: User,
+    var buyer: User?,
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "seller_id")
-    var seller: User,
+    var seller: User?,
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "status_code")
     var status: DealStatus,
     var isActive: Boolean = true,

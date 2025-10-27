@@ -1,12 +1,14 @@
 package org.oldjopa.hls.dto
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies
+import com.fasterxml.jackson.databind.annotation.JsonNaming
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 import java.time.Instant
 
 // Read DTOs
-
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class DealStatusDto(
     val code: String,
     val name: String,
@@ -15,28 +17,29 @@ data class DealStatusDto(
     val isTerminal: Boolean
 )
 
-
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class DealDto(
     val id: Long,
     val dealNumber: String,
-    val aircraft: AircraftDto,
-    val buyer: UserDto,
-    val seller: UserDto,
+    val aircraft: AircraftDto?,
+    val buyer: UserDto?,
+    val seller: UserDto?,
     val status: DealStatusDto,
     val isActive: Boolean,
     val closedAt: Instant?
 )
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class DealStatusHistoryDto(
     val id: Long,
     val status: DealStatusDto,
-    val changedByUserId: Long,
+    val changedByUserId: Long?,
     val changedAt: Instant,
     val comment: String?
 )
 
 // Request DTOs
-
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class CreateDealRequest(
     @field:NotBlank @field:Size(max = 255)
     val dealNumber: String,
@@ -50,6 +53,7 @@ data class CreateDealRequest(
     val initialStatus: String
 )
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class ChangeDealStatusRequest(
     @field:NotBlank
     val statusCode: String,
@@ -58,6 +62,7 @@ data class ChangeDealStatusRequest(
     val comment: String?
 )
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class CreateStatusRequest(
     @field:NotBlank @field:Size(max = 30)
     val code: String,

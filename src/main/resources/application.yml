@@ -8,6 +8,8 @@ spring:
     username: ${DB_USERNAME:appuser}
     password: ${DB_PASS:apppass}
     driver-class-name: org.postgresql.Driver
+  jackson:
+    property-naming-strategy: SNAKE_CASE
   web:
     resources:
       add-mappings: false
