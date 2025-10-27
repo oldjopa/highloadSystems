@@ -8,6 +8,9 @@ spring:
     username: ${DB_USERNAME:appuser}
     password: ${DB_PASS:apppass}
     driver-class-name: org.postgresql.Driver
+  web:
+    resources:
+      add-mappings: false
 
   jpa:
     hibernate:

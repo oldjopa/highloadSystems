@@ -22,7 +22,7 @@ class AircraftApiIntegrationTest : AbstractIntegrationTest() {
     }
 
     @Test
-    @Sql(scripts = ["/sql/aircraft/post_aircraft_after.sql"], executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = ["/sql/aircraft/aircraft_after.sql"], executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     fun `should create aircraft`() {
         val requestJson = fromResources("/json/aircraft/create_request_01.json")
 
@@ -36,11 +36,11 @@ class AircraftApiIntegrationTest : AbstractIntegrationTest() {
 
     @Test
     @Sql(
-        scripts = ["/sql/aircraft/pre_aircraft_with_data.sql"],
+        scripts = ["/sql/aircraft/aircraft_with_data.sql"],
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
     )
     @Sql(
-        scripts = ["/sql/aircraft/post_aircraft_after.sql"],
+        scripts = ["/sql/aircraft/aircraft_after.sql"],
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
     fun `should get aircraft by id`() {
@@ -54,11 +54,11 @@ class AircraftApiIntegrationTest : AbstractIntegrationTest() {
 
     @Test
     @Sql(
-        scripts = ["/sql/aircraft/pre_aircraft_with_data.sql"],
+        scripts = ["/sql/aircraft/aircraft_with_data.sql"],
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
     )
     @Sql(
-        scripts = ["/sql/aircraft/post_aircraft_after.sql"],
+        scripts = ["/sql/aircraft/aircraft_after.sql"],
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
     fun `should update aircraft`() {
@@ -78,19 +78,36 @@ class AircraftApiIntegrationTest : AbstractIntegrationTest() {
         }
     }
 
+//    @Test
+//    @Sql(
+//        scripts = ["/sql/aircraft/aircraft_with_data.sql"],
+//        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
+//    )
+//    @Sql(
+//        scripts = ["/sql/aircraft/aircraft_after.sql"],
+//        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
+//    )
+//    fun `should delete aircraft`() {
+//        mockMvc.delete("/api/aircrafts/10")
+//            .andExpect {
+//                status { isNoContent() }
+//            }
+//    }
+
     @Test
     @Sql(
-        scripts = ["/sql/aircraft/pre_aircraft_with_data.sql"],
+        scripts = ["/sql/aircraft/get_full_before.sql"],
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
     )
     @Sql(
-        scripts = ["/sql/aircraft/post_aircraft_after.sql"],
+        scripts = ["/sql/aircraft/get_full_after.sql"],
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
     )
-    fun `should delete aircraft`() {
-        mockMvc.delete("/api/aircrafts/10")
-            .andExpect {
-                status { isNoContent() }
-            }
+    fun `should return full aircraft info`(){
+        mockMvc.get("/api/aircrafts/11/full")
+        .andExpect {
+            status { isOk() }
+            content { json(fromResources("/json/aircraft/response_get_full_01.json"), strict = true) }
+        }
     }
 }

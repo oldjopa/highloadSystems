@@ -15,6 +15,7 @@ import org.oldjopa.hls.service.aircraft.AircraftEquipmentService
 import org.oldjopa.hls.service.aircraft.AircraftService
 import org.oldjopa.hls.service.aircraft.EngineService
 import org.oldjopa.hls.service.aircraft.TechPassportService
+import org.oldjopa.hls.service.deal.DealService
 import org.oldjopa.hls.service.user.UserService
 import java.math.BigDecimal
 import java.time.Instant
@@ -30,13 +31,15 @@ class AircraftServiceTest {
     private val engineService = mockk<EngineService>()
     private val techPassportService = mockk<TechPassportService>()
     private val userService = mockk<UserService>()
+    private val dealService = mockk<DealService>()
 
     private val service = AircraftService(
         aircraftRepository,
         equipmentService,
         engineService,
         techPassportService,
-        userService
+        userService,
+        dealService
     )
 
     @AfterEach
@@ -215,6 +218,7 @@ fun `delete aircraft success`() {
     every { aircraftRepository.existsById(1) } returns true
     every { aircraftRepository.findById(1) } returns Optional.of(a)
     every { aircraftRepository.deleteById(1) } just Runs
+    every { dealService.deleteAllByAircraftId(1) } just Runs
 
     // Act
     service.delete(1)

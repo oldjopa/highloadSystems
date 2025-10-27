@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.context.request.ServletWebRequest
+import org.springframework.web.servlet.NoHandlerFoundException
 import java.time.Instant
 
 @RestControllerAdvice
@@ -54,6 +55,21 @@ class GlobalExceptionHandler {
     fun handleGeneric(ex: Exception, req: ServletWebRequest): ResponseEntity<ErrorResponse> {
         log.error("Unhandled exception", ex)
         return build(HttpStatus.INTERNAL_SERVER_ERROR, BusinessException(ex.message ?: "Unexpected error"), req)
+    }
+
+    @ExceptionHandler(NoHandlerFoundException::class)
+    fun handleNoHandlerFound(ex: NoHandlerFoundException, req: ServletWebRequest): ResponseEntity<ErrorResponse> {
+        log.warn("No handler found for: ${ex.httpMethod} ${ex.requestURL}")
+        val path = req.request.requestURI
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+            ErrorResponse(
+                status = HttpStatus.NOT_FOUND.value(),
+                error = "Not Found",
+                code = "NOT_FOUND",
+                message = "Endpoint not found: $path",
+                path = path
+            )
+        )
     }
 
     private fun build(status: HttpStatus, ex: BusinessException, req: ServletWebRequest): ResponseEntity<ErrorResponse> {
